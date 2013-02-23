@@ -29,7 +29,7 @@ class Calendar < ActiveRecord::Base
   
   def self.calendar_update
     events = self.events_list
-    for events.each do |event|
+    events.each do |event|
       email = Email.find_by_address(event["creator"]["email"])
       if email
         user = email.user
@@ -47,7 +47,7 @@ class Calendar < ActiveRecord::Base
         end
         user.events.create(params)
       else
-        raise "event #{event["summary"]} not created because creator is not a registered user"
+        raise "event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user"
       end
     end
   end

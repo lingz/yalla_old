@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :display_image, :name, :password, :school_id
+  attr_accessible :display_image, :name, :password, :school_id, :school
 
   belongs_to :school
 
