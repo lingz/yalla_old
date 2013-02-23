@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
 
   has_many :emails
   has_many :events
+  has_many :comments
 end

@@ -40,6 +40,13 @@
   <%= @event.status %>
 </p>
 
+<h2> Comments </h2>
+<%= render @event.comments %>
+
+<br />
+
+Add a comment:
+<%= render "comments/form" %>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

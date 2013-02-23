@@ -1,0 +1,10 @@
+<p>
+  <b>Comment:</b>
+  <%= comment.description %>
+</p>
+
+<p>
+  <%= link_to 'Delete Comment', [comment.event, comment],
+               confirm: 'Are you sure?',
+               method:  :delete %>
+</p>

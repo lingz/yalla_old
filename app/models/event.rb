@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   attr_accessible :description, :end_time, :user_id, :image, :location, :name, :start_time, :status
 
+  has_many :comments
+
   belongs_to :user
 
   validate :start_time_cannot_be_in_the_past, :end_time_cannot_be_before_start_time
