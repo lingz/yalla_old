@@ -143,6 +143,7 @@ DEPENDENCIES
   google-api-client
   httparty
   jquery-rails
+  json
   rails (= 3.2.11)
   rest-client
   sass-rails (~> 3.2.3)

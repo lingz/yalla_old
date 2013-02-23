@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  attr_accessible :description, :end_time, :user_id, :image, :location, :name, :start_time, :status
+  attr_accessible :description, :end_time, :user_id, :image,
+    :location, :name, :start_time, :status, :unique_id
 
   has_many :comments
 

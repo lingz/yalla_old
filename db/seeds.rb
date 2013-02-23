@@ -12,7 +12,8 @@ calendar = Calendar.create({code: "4/sKj-4D97VtQ7nHKIryrRa-yEPnzu.0trI63WI3O8XaD
                            redirect_uri: "https://localhost/oauth2callback",
                            access_token: "ya29.AHES6ZQsX4fsVjNY9G3a9TOU3-h49X3r128DaWNPv_YCMuK3c8rXXQ",
                            refresh_token: "1/6pC6Dwsax6BzqZOfJ3C28e7K9wBUEv5uYmOvfRNQ560",
-                           calendar_id: "almultaqa.events@gmail.com"})
+                           calendar_id: "almultaqa.events@gmail.com",
+                           last_update: DateTime.now.advance(days: -7)})
 calendar.save!
 
 nyuad = School.create({name: "NYUAD"})
