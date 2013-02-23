@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @calendar.code %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @calendar.client_id %>
+</p>
+
+<p>
+  <b>Client secret:</b>
+  <%= @calendar.client_secret %>
+</p>
+
+<p>
+  <b>Redirect uri:</b>
+  <%= @calendar.redirect_uri %>
+</p>
+
+<p>
+  <b>Access token:</b>
+  <%= @calendar.access_token %>
+</p>
+
+<p>
+  <b>Refresh token:</b>
+  <%= @calendar.refresh_token %>
+</p>
+
+
+<%= link_to 'Edit', edit_calendar_path(@calendar) %> |
+<%= link_to 'Back', calendars_path %>

@@ -1,0 +1,33 @@
+<h1>Listing calendars</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Client</th>
+    <th>Client secret</th>
+    <th>Redirect uri</th>
+    <th>Access token</th>
+    <th>Refresh token</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @calendars.each do |calendar| %>
+  <tr>
+    <td><%= calendar.code %></td>
+    <td><%= calendar.client_id %></td>
+    <td><%= calendar.client_secret %></td>
+    <td><%= calendar.redirect_uri %></td>
+    <td><%= calendar.access_token %></td>
+    <td><%= calendar.refresh_token %></td>
+    <td><%= link_to 'Show', calendar %></td>
+    <td><%= link_to 'Edit', edit_calendar_path(calendar) %></td>
+    <td><%= link_to 'Destroy', calendar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Calendar', new_calendar_path %>

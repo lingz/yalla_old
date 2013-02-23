@@ -6,6 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+calendar = Calendar.create({code: "4/sKj-4D97VtQ7nHKIryrRa-yEPnzu.0trI63WI3O8XaDn_6y0ZQNgGcoIOegI",
+                           client_id: "759068570332.apps.googleusercontent.com",
+                           client_secret: "7amw71XAAyReH92K_LtOp5-a",
+                           redirect_uri: "https://localhost/oauth2callback",
+                           access_token: "ya29.AHES6ZQsX4fsVjNY9G3a9TOU3-h49X3r128DaWNPv_YCMuK3c8rXXQ",
+                           refresh_token: "1/6pC6Dwsax6BzqZOfJ3C28e7K9wBUEv5uYmOvfRNQ560",
+                           calendar_id: "almultaqa.events@gmail.com"})
+calendar.save!
+
 nyuad = School.create({name: "NYUAD"})
 claflin = School.create({name: "Claflin"})
 zayed = School.create({name: "Zayed University"})
@@ -52,5 +61,4 @@ computer = jessica.events.create({name: "Computer Science Seminar", location: "C
                                 description: "Basketball game: Zayed v. NYUAD", image: "basketball.jpg",
                                 status: "active"})
 computer.save!
-comment = Comment.create({description: "This is awesome! I'm definiately going to go to this!"})
-computer.comments.append(comment)
+comment = computer.comments.create({description: "This is awesome! I'm definiately going to go to this!"})

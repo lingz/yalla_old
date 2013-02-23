@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223091116) do
+ActiveRecord::Schema.define(:version => 20130223150216) do
+
+  create_table "calendars", :force => true do |t|
+    t.string   "code"
+    t.string   "client_id"
+    t.string   "client_secret"
+    t.string   "redirect_uri"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "calendar_id"
+  end
 
   create_table "comments", :force => true do |t|
     t.string   "description"
@@ -19,6 +31,17 @@ ActiveRecord::Schema.define(:version => 20130223091116) do
     t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "controllers", :force => true do |t|
+    t.string   "code"
+    t.string   "client_id"
+    t.string   "client_secret"
+    t.string   "redirect_uri"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "emails", :force => true do |t|

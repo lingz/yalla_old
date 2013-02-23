@@ -1,6 +1,9 @@
 Unilink::Application.routes.draw do
 
+  resources :calendars
 
+
+  match "oauth2callback" => "calendar#callback"
 
   resources :events do
     resources :comments
@@ -16,6 +19,7 @@ Unilink::Application.routes.draw do
 
 
   get "home/index"
+  get "calendar/callback"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
