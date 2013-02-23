@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   has_many :emails
   has_many :events
   has_many :comments
+
+  validates :name, presence: true, uniqueness: true
+  validates :password, presence: true
+  
 end
