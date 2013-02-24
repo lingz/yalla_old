@@ -38,6 +38,7 @@ class Calendar < ActiveRecord::Base
         location: event["location"],
         description: event["description"],
         unique_id: unique_id,
+        ids: event["id"],
         status: event["status"]}
       if event["start"]["date"]
         params[:start_time] = event["start"]["date"].to_datetime
@@ -78,4 +79,29 @@ class Calendar < ActiveRecord::Base
     event_list["items"]
   end
 
+  def self.add_person(event, email)
+    require 'google/api_client'
+
+    @calendar = Calendar.find(1)
+
+    client = Google::APIClient.new
+    client.authorization.client_id = "759068570332.apps.googleusercontent.com"
+    client.authorization.client_secret = "7amw71XAAyReH92K_LtOp5-a"
+    client.authorization.scope = "https://www.googleapis.com/auth/calendar"
+    client.authorization.refresh_token = @calendar.refresh_token 
+    client.authorization.access_token = @calendar.access_token
+
+    service = client.discovered_api('calendar','v3')
+
+    result = client.execute(:api_method => service.events.get,
+                        :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
+    result = result.data
+    result.attendees[1].email=email
+    result = client.execute(:api_method => service.events.update,
+                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids},
+                            :body_object => result,
+                            :headers => {'Content-Type' => 'application/json'})
+    print result.data.updated
+    
+  end
 end

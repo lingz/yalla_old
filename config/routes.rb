@@ -4,6 +4,7 @@ Unilink::Application.routes.draw do
 
 
   match "oauth2callback" => "calendar#callback"
+  match "/attend" => "calendars#attend"
   match "/auth/:provider/callback" => "sessions#create"
   match "/sessions/create" => "sessions#create"
   match "/sessions/new" => "sessions#new"
@@ -71,7 +72,7 @@ Unilink::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root :to => 'events#index'
 
   # See how all your routes lay out with "rake routes"
 

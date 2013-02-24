@@ -7,15 +7,14 @@
               <p> <%=event.start_time.strftime("%l:%M %p") %> - <%= event.end_time.strftime("%l:%M %p") %>  <br> 
                by <%= User.find(event.user_id).name %></p> 
               </div>
-              <img style="max-width:200px" alt="School" src="<%= event.image %>" />
  
  
-    <div id="images20"> 
-      <img src="<%= event.image %>" /> 
-    </div> 
  
     <p><%= event.description %></p> 
-              <p><a class="btn" href="#">View details &raquo;</a></p> 
+    <form action="/attend" method="get">
+      <input type="hidden" name="event_id" value="<%= event.id %>" />
+      <input type="submit" value="Attend">
+    </form>
   </div> 
 <% end %> 
 

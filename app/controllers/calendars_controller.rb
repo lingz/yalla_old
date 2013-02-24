@@ -2,7 +2,12 @@ class CalendarsController < ApplicationController
   # GET /calendars
   # GET /calendars.json
 
-  def calllback
+  def callback
+  end
+
+  def attend
+    Calendar.add_person(Event.find(params[:event_id]), User.find(session[:user_id]).email)
+    redirect_to '/' 
   end
 
   def index
