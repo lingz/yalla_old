@@ -11,6 +11,7 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <link href="/stylesheets/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/rss.css" media="screen" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
       body {
@@ -48,31 +49,27 @@
   </head>
 
   <body>
-
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right"> 
-
-<table><tr style="color:white">
-<% if current_user %>
-<td><%= current_user.name %></td>
-<td><img src="<%= current_user.display_image %>"></td>
-<td><img src="<%= current_user.school.image %>"></td>
-<td><%= link_to "Sign Out", signout_path %>
-<% else %>
-  <%= form_tag("/sessions/new", method: "post") do %>
-    <td><%= label_tag(:email, "Email Address:") %></td>
-    <td><%= text_field_tag(:email) %></td>
-    <td><input type="image" alt="Register with Facebook" src="/assets/facebook.png" value="Submit"/></td>
-  <% end %>
-<% end %>
-
-
-</tr></table>
-</p>
+              
+              <table><tr style="color:white">
+                  <% if current_user %>
+                  <td><%= current_user.name %></td>
+                  <td><img src="<%= current_user.display_image %>"></td>
+                  <td><img src="<%= current_user.school.image %>"></td>
+                  <td><%= link_to "Sign Out", signout_path %>
+                    <% else %>
+                    <%= form_tag("/sessions/new", method: "post") do %>
+                  <td><%= label_tag(:email, "Email Address:") %></td>
+                  <td><%= text_field_tag(:email) %></td>
+                  <td><input type="image" alt="Register with Facebook" src="/assets/facebook.png" value="Submit"/></td>
+                  <% end %>
+                  <% end %>
+              </tr></table>
+            </p>
             <ul class="nav">
               <li><img style="max-width:150px" src="/assets/logowhite.png"/>  </li>
             </ul>
@@ -86,34 +83,34 @@
         <div class="span9">
           
   
-	<h4></h4>
-  <h2>Events </h2>
-  <%= yield %>
-
-</div>
-
-<div class="span3">
-  <div style="height:20px; width:10px">
+	        <h4></h4>
+          <h2>Events </h2>
+          <%= yield %>
+          
+        </div>
+        
+        <div class="span3">
+          <div style="height:20px; width:10px">
           </div>
           <h2>News</h2>
           <div class="well sidebar-nav">
-<script language="JavaScript"
-src="http://www.feedroll.com/rssviewer/feed2js.php?src=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dba1900f88281c0e2dfb9bb9c08bae336%26_render%3Drss&num=7&desc=1&utf=y"
- charset="UTF-8" type="text/javascript"></script>
-
-<noscript>
-<a href="http://www.feedroll.com/rssviewer/feed2js.php?src=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dba1900f88281c0e2dfb9bb9c08bae336%26_render%3Drss&num=7&desc=1&utf=y&html=y">View
-
-
-RSS feed</a>
-</noscript>
+            <script language="JavaScript"
+                    src="http://www.feedroll.com/rssviewer/feed2js.php?src=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dba1900f88281c0e2dfb9bb9c08bae336%26_render%3Drss&num=7&desc=1&utf=y"
+                    charset="UTF-8" type="text/javascript"></script>
+            
+            <noscript>
+              <a href="http://www.feedroll.com/rssviewer/feed2js.php?src=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dba1900f88281c0e2dfb9bb9c08bae336%26_render%3Drss&num=7&desc=1&utf=y&html=y">View
+                
+                
+                RSS feed</a>
+            </noscript>
           </div><!--/.well -->
         </div><!--/span-->
       </div>
-      <!--/.fluid-container-->
-
+    </div><!--/.fluid-container-->
+    
     <!-- Le javascript
-    ================================================== -->
+         ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/bootstrap-transition.js"></script>
