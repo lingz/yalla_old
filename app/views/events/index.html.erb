@@ -1,9 +1,12 @@
  <% Event.all.each do |event| %> 
             <div class="span4"> 
               <img style="float:left;max-width:50px" alt="School" src="<%= event.user.school.image %>" />
-              <%= event.name %>
+              <img style="float:left;max-width:50px" alt="School" src="<%= event.user.display_image %>" />
+              <div style="clear:both;">
+              <h2><%= event.name %></h2>
               <p> <%=event.start_time.strftime("%l:%M %p") %> - <%= event.end_time.strftime("%l:%M %p") %>  <br> 
                by <%= User.find(event.user_id).name %></p> 
+              </div>
               <img style="max-width:200px" alt="School" src="<%= event.image %>" />
  
  
