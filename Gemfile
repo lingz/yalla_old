@@ -26,6 +26,10 @@ gem 'httparty'
 gem 'google-api-client'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'less-rails-bootstrap'
+gem 'jquery-rails'
+gem 'therubyracer'
+gem 'jquery-ui-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
