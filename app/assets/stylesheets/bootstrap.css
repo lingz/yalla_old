@@ -6182,8 +6182,5 @@ a.badge:focus {
 
 
 
-h4 {text-align: center; background-color:#9DE0AD; height:40; border-radius: 20px;
-	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1)}
+h4 {text-align: center; background-color:white; height:40; font:white;}
 

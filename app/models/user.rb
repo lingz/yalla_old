@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :display_image, :name, :password, :school_id, :school
+  attr_accessible :display_image, :name, :password, :school_id, :school, :provider, :uid, :user
 
   belongs_to :school
 
@@ -21,12 +21,16 @@ class User < ActiveRecord::Base
   end
 
   def self.create_with_omniauth(auth)
-    create! do |user|
-      user.provider = auth["provider"]
-      user.uid = auth["uid"]
-      user.name = auth["info"]["name"]
-      user.display_image = auth["info"]["image"]
-    end
+    nyuad = School.find_by_name("NYUAD")
+    user = nyuad.users.create({
+      provider: auth["provider"],
+      uid: auth["uid"],
+      name: auth["info"]["name"],
+      display_image: auth["info"]["image"]
+      })
+    user.save!
+    nyuad.save!
+    user
   end
   
 end

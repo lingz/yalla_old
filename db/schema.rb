@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224074350) do
+ActiveRecord::Schema.define(:version => 20130224103232) do
 
   create_table "calendars", :force => true do |t|
     t.string   "code"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20130224074350) do
     t.datetime "updated_at",    :null => false
     t.string   "provider"
     t.string   "uid"
+    t.string   "email"
   end
 
 end
