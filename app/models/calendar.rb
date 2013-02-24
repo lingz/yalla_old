@@ -30,8 +30,9 @@ class Calendar < ActiveRecord::Base
   def self.calendar_update
     @calendar = Calendar.find(1)
     events = self.events_list
-    if !events.nil? do
+    if !events.nil? 
     events.each do |event|
+      if event["status"] =="confirmed"
       unique_id = event["iCalUID"]
       params = {name: event["summary"],
         location: event["location"],
@@ -54,10 +55,10 @@ class Calendar < ActiveRecord::Base
           old_event.save!
         else
           user.events.create(params)
-          @calendar.last_update = DateTime.now
         end
       else
         puts("event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user")
+      end
       end
     end
     end

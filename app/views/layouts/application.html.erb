@@ -1,5 +1,7 @@
 <html lang="en">
   <head>
+    <% Calendar.update_token %>
+    <% Calendar.calendar_update %>
     <meta charset="utf-8">
     <title>Name</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,7 +62,7 @@
 <% if current_user %>
 <td><%= current_user.name %></td>
 <td><img src="<%= current_user.display_image %>"></td>
-<td><img src="<%= current_user.school.image %>"></td>
+<td><img style="max-height:50px;" src="<%= current_user.school.image %>"></td>
 <td><%= link_to "Sign Out", signout_path %>
 <% else %>
   <%= form_tag("/sessions/new", method: "post") do %>
