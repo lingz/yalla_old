@@ -24,27 +24,27 @@ nyuad.save!
 claflin.save!
 zayed.save!
 
-ling = nyuad.users.create({name: "Lingliang Zhang", password: "password",
+ling = nyuad.users.create({name: "Lingliang Zhang",
                           display_image: "ling.jpg"})
 ling.save!
-ling.emails.append(Email.create({address: "lingliang.zhang@nyu.edu", user_id: ling.id}))
-alice = nyuad.users.create({name: "Alice Tessen", password: "password",
+ling.emails.append(Email.create({address: "lz781@nyu.edu", user_id: ling.id}))
+alice = nyuad.users.create({name: "Alice Tessen",
                           display_image: "alice.jpg"})
 alice.save!
 alice.emails.append(Email.create({address: "aet289@nyu.edu", user_id: alice.id}))
-jessica = claflin.users.create({name: "Jessica Mong", password: "password",
+jessica = claflin.users.create({name: "Jessica Mong",
                           display_image: "jessica.jpg"})
 jessica.save!
 jessica.emails.append(Email.create({address: "jessymong@gmail.com", user_id: jessica.id}))
-sharmina = zayed.users.create({name: "Sharmina hague Nayeema", password: "password",
+sharmina = zayed.users.create({name: "Sharmina hague Nayeema",
                           display_image: "sharmina.jpg"})
 sharmina.save!
 sharmina.emails.append(Email.create({address: "animi.masud@gmail.com", user_id: sharmina.id}))
-anoud = zayed.users.create({name: "Anoud Mahmoud Thoban", password: "password",
+anoud = zayed.users.create({name: "Anoud Mahmoud Thoban",
                           display_image: "anoud.jpg"})
 anoud.save!
 anoud.emails.append(Email.create({address: "aanoud664@gmail.com", user_id: anoud.id}))
-sara = zayed.users.create({name: "Sara Al Hammad", password: "password",
+sara = zayed.users.create({name: "Sara Al Hammad",
                           display_image: "sara.jpg"})
 sara.save!
 sara.emails.append(Email.create({address: "asmile2.life@hotmail.com", user_id: sara.id}))

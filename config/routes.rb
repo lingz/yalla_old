@@ -4,6 +4,8 @@ Unilink::Application.routes.draw do
 
 
   match "oauth2callback" => "calendar#callback"
+  match "/auth/:provider/callback" => "sessions#create"
+  match "/signout" => "sessions#destroy", :as => :signout
 
   resources :events do
     resources :comments

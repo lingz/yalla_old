@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Password</th>
     <th>Display image</th>
     <th>School</th>
     <th></th>
@@ -14,7 +13,6 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.name %></td>
-    <td><%= user.password %></td>
     <td><%= user.display_image %></td>
     <td><%= user.school_id %></td>
     <td><%= link_to 'Show', user %></td>

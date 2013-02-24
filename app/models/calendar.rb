@@ -30,24 +30,32 @@ class Calendar < ActiveRecord::Base
   def self.calendar_update
     events = self.events_list
     events.each do |event|
+      unique_id = event["iCalUID"]
+      params = {name: event["summary"],
+        location: event["location"],
+        description: event["description"],
+        unique_id: unique_id,
+        status: event["status"]}
+      if event["start"]["date"]
+        params[:start_time] = event["start"]["date"].to_datetime
+        params[:end_time] = event["end"]["date"].to_datetime
+      else
+        params[:start_time] = event["start"]["dateTime"].to_datetime
+        params[:end_time] = event["end"]["dateTime"].to_datetime
+      end
       email = Email.find_by_address(event["creator"]["email"])
       if email
         user = email.user
-        params = {name: event["summary"],
-          user_id: user.id,
-          location: event["location"],
-          description: event["description"],
-          unique_id: event["iCalUID"]}
-        if event["start"]["date"]
-          params[:start_time] = event["start"]["date"].to_datetime
-          params[:end_time] = event["end"]["date"].to_datetime
+        params[:user_id] =  user.id
+        old_event = Event.find_by_unique_id(unique_id)
+        if old_event
+          old_event.update_attributes(params)
+          old_event.save!
         else
-          params[:start_time] = event["start"]["dateTime"].to_datetime
-          params[:end_time] = event["end"]["dateTime"].to_datetime
+          user.events.create(params)
         end
-        user.events.create(params)
       else
-        raise "event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user"
+        puts("event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user")
       end
     end
   end
@@ -56,10 +64,12 @@ class Calendar < ActiveRecord::Base
     @calendar = Calendar.find(1)
     puts("https://www.googleapis.com/calendar/v3/calendars/\
 #{@calendar.calendar_id}/events?access_token=#{@calendar.access_token}\
-&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}")
+&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
+&showDeleted=true")
     event_list = HTTParty.get("https://www.googleapis.com/calendar/v3/calendars/\
 #{@calendar.calendar_id}/events?access_token=#{@calendar.access_token}\
-&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}")
+&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
+&showDeleted=true")
     @calendar.last_update = DateTime.now
     @calendar.save!
     event_list["items"]

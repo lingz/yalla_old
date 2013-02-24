@@ -7,7 +7,26 @@ class User < ActiveRecord::Base
   has_many :events
   has_many :comments
 
-  validates :name, presence: true, uniqueness: true
-  validates :password, presence: true
+
+  def self.authenticate(name, password)
+    user = User.find_by_name(name)
+    if !user
+      return nil
+    end
+    if user.password == password
+      return user
+    else
+      return nil
+    end
+  end
+
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.provider = auth["provider"]
+      user.uid = auth["uid"]
+      user.name = auth["info"]["name"]
+      user.display_image = auth["info"]["image"]
+    end
+  end
   
 end
