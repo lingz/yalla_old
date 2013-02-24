@@ -10,5 +10,8 @@
  *
  *= require_self
  *= require_tree .
- *= require jquery.ui.all
  */
+
+body{
+background: "red";
+}
