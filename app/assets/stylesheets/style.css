@@ -1,0 +1,341 @@
+/* Stylesheet for Al Multaqa 
+ * Written by Lingliang Zhang
+ */
+
+.box
+{
+  margin: 5px;
+}
+
+.event-container
+{
+  background: #eeeeee;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  float: left;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 10px;
+}
+.event-filter
+{
+  background: #eeeeee;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.event-detail > div
+{
+  float:left !important;
+}
+.event-detail > div:first-child
+{
+  width:10%;
+}
+
+.event-detail > div:last-child
+{
+  width:65%;
+}
+
+.event-description
+{
+  width: auto;
+}
+.event-filter > .container-fluid
+{
+  padding: 15px;
+}
+
+.event-row
+{
+  padding-top: 10px
+}
+
+.event-container
+{
+  color: white;
+}
+
+.event-title-container
+{
+  padding-top: 5px;
+}
+
+.event-title
+{
+  text-align: center;
+}
+
+.event-detail-container
+{
+  padding-top: 10px;
+}
+
+.event-detail
+{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /*border-bottom: #cccccc solid 1px; */
+}
+
+.event-detail .span2
+{
+  line-height: 40px;
+}
+
+.span2 i
+{
+  vertical-align: middle;
+}
+
+.event-detail .span9
+{
+  height: 30px;
+}
+
+.event-detail:first-child
+{
+  padding-top: 0px;
+}
+
+.event-detail:last-child
+{
+  border-bottom: none;
+  padding-bottom: 0px;
+}
+
+.event-parameter
+{
+  padding-left:10px;
+  text-align: left;
+}
+
+.button-container
+{
+  padding-top: 25px;
+}
+
+
+
+.event-description
+{
+  padding-top: 10px;
+}
+
+.filter1
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(top left, #0335FF 0%, #5F0084 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top left, #0335FF 0%, #5F0084 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top left, #0335FF 0%, #5F0084 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #0335FF), color-stop(1, #5F0084));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top left, #0335FF 0%, #5F0084 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to bottom right, #0335FF 0%, #5F0084 100%);
+} 
+
+.filter2
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(top right, #0335FF 0%, #CD03FF 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top right, #0335FF 0%, #CD03FF 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top right, #0335FF 0%, #CD03FF 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, right top, left bottom, color-stop(0, #0335FF), color-stop(1, #CD03FF));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top right, #0335FF 0%, #CD03FF 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to bottom left, #0335FF 0%, #CD03FF 100%);
+}
+
+.filter3
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(bottom left, #0335FF 0%, #F20034 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(bottom left, #0335FF 0%, #F20034 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(bottom left, #0335FF 0%, #F20034 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #0335FF), color-stop(1, #F20034));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(bottom left, #0335FF 0%, #F20034 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to top right, #0335FF 0%, #F20034 100%);
+}
+
+.filter4
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(bottom right, #5F0084 0%, #CD03FF 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(bottom right, #5F0084 0%, #CD03FF 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(bottom right, #5F0084 0%, #CD03FF 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, right bottom, left top, color-stop(0, #5F0084), color-stop(1, #CD03FF));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(bottom right, #5F0084 0%, #CD03FF 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to top left, #5F0084 0%, #CD03FF 100%);
+}
+
+.filter5
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(bottom, #5F0084 0%, #F20034 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(bottom, #5F0084 0%, #F20034 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(bottom, #5F0084 0%, #F20034 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #5F0084), color-stop(1, #F20034));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(bottom, #5F0084 0%, #F20034 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to top, #5F0084 0%, #F20034 100%);
+}
+
+.filter6
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(right, #CD03FF 0%, #F20034 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(right, #CD03FF 0%, #F20034 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(right, #CD03FF 0%, #F20034 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #CD03FF), color-stop(1, #F20034));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(right, #CD03FF 0%, #F20034 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to left, #CD03FF 0%, #F20034 100%);
+}
+
+.filter7
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(top left, #009DF3 0%, #5F0084 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top left, #009DF3 0%, #5F0084 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top left, #009DF3 0%, #5F0084 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #009DF3), color-stop(1, #5F0084));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top left, #009DF3 0%, #5F0084 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to bottom right, #009DF3 0%, #5F0084 100%);
+} 
+
+.filter8
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(top right, #009DF3 0%, #CD03FF 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top right, #009DF3 0%, #CD03FF 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top right, #009DF3 0%, #CD03FF 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, right top, left bottom, color-stop(0, #009DF3), color-stop(1, #CD03FF));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top right, #009DF3 0%, #CD03FF 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to bottom left, #009DF3 0%, #CD03FF 100%);
+}
+
+.filter9
+{
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(bottom left, #009DF3 0%, #F20034 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(bottom left, #009DF3 0%, #F20034 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(bottom left, #009DF3 0%, #F20034 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #009DF3), color-stop(1, #F20034));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(bottom left, #009DF3 0%, #F20034 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to top right, #009DF3 0%, #F20034 100%);
+}
+
+/**** Transitions ****/
+
+.masonry,
+.masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+     -moz-transition-duration: 0.7s;
+      -ms-transition-duration: 0.7s;
+       -o-transition-duration: 0.7s;
+          transition-duration: 0.7s;
+}
+
+.masonry {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+     -moz-transition-property: left, right, top;
+      -ms-transition-property: left, right, top;
+       -o-transition-property: left, right, top;
+          transition-property: left, right, top;
+}

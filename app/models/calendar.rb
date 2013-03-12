@@ -30,36 +30,52 @@ class Calendar < ActiveRecord::Base
   def self.calendar_update
     @calendar = Calendar.find(1)
     events = self.events_list
+    @calendar.last_update = DateTime.now
+    @calendar.save!
+    
+    #check if events exist at all
     if !events.nil? 
     events.each do |event|
-      if event["status"] =="confirmed"
-      unique_id = event["iCalUID"]
-      params = {name: event["summary"],
-        location: event["location"],
-        description: event["description"],
-        unique_id: unique_id,
-        ids: event["id"],
-        status: event["status"]}
-      if event["start"]["date"]
-        params[:start_time] = event["start"]["date"].to_datetime
-        params[:end_time] = event["end"]["date"].to_datetime
-      else
-        params[:start_time] = event["start"]["dateTime"].to_datetime
-        params[:end_time] = event["end"]["dateTime"].to_datetime
-      end
-      user = User.find_by_email(event["creator"]["email"])
-      if user
-        params[:user_id] =  user.id
-        old_event = Event.find_by_unique_id(unique_id)
-        if old_event
-          old_event.update_attributes(params)
-          old_event.save!
+      #if the events are confirmed, then create / update them
+      if event["status"] == "confirmed"
+        params = {name: event["summary"],
+          location: event["location"],
+          description: event["description"],
+          unique_id: event["iCalUID"],
+          ids: event["id"],
+          status: event["status"]}
+        # if event starts and ends on a different day
+        if event["start"]["date"]
+          params[:start_time] = event["start"]["date"].to_datetime
+          params[:end_time] = event["end"]["date"].to_datetime
+        # if event starts and ends on the same day
         else
-          user.events.create(params)
+          params[:start_time] = event["start"]["dateTime"].to_datetime
+          params[:end_time] = event["end"]["dateTime"].to_datetime
+        end
+        user = User.find_by_email(event["creator"]["email"])
+        # check if the user exists in the system (so that have permission to be added) 
+        if user
+          params[:user_id] =  user.id
+          old_event = Event.find_by_unique_id(params[:unique_id])
+          # if the event already exists, update it
+          if old_event
+            old_event.update_attributes(params)
+            old_event.save!
+          # otherwise create a new event
+          else
+            user.events.create(params)
+          end
+        else
+          puts("event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user")
+        end
+      elsif event["status"] == "cancelled" 
+        event = Event.find_by_unique_id(event["iCalUID"])
+        if event
+          Event.delete(event.id)
         end
       else
-        puts("event #{event["summary"]} not created because creator #{event["creator"]["email"]} is not a registered user")
-      end
+        puts("Error:unhandled event state")
       end
     end
     end
@@ -69,29 +85,23 @@ class Calendar < ActiveRecord::Base
     @calendar = Calendar.find(1)
     puts("https://www.googleapis.com/calendar/v3/calendars/\
 #{@calendar.calendar_id}/events?access_token=#{@calendar.access_token}\
-&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
+&timeMin=#{DateTime.now.advance(hours: -4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
 &showDeleted=true")
-    event_list = HTTParty.get("https://www.googleapis.com/calendar/v3/calendars/\
-#{@calendar.calendar_id}/events?access_token=#{@calendar.access_token}\
-&timeMin=#{DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
-&showDeleted=true")
-    @calendar.save!
-    event_list["items"]
+    
+    client, service = self.get_client
+    
+    result = client.execute(api_method: service.events.list,
+                            parameters: {'calendarId' => @calendar.calendar_id,
+                                         'timeMin' => DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                                         'updatedMin' => @calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                                         'showDeleted' => true})
+    events_list = result.data.items
   end
 
   def self.add_person(event, email)
-    require 'google/api_client'
-
     @calendar = Calendar.find(1)
 
-    client = Google::APIClient.new
-    client.authorization.client_id = "759068570332.apps.googleusercontent.com"
-    client.authorization.client_secret = "7amw71XAAyReH92K_LtOp5-a"
-    client.authorization.scope = "https://www.googleapis.com/auth/calendar"
-    client.authorization.refresh_token = @calendar.refresh_token 
-    client.authorization.access_token = @calendar.access_token
-
-    service = client.discovered_api('calendar','v3')
+    client, service = self.get_client
 
     result = client.execute(:api_method => service.events.get,
                         :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
@@ -104,4 +114,24 @@ class Calendar < ActiveRecord::Base
     print result.data.updated
     
   end
+
+  def self.get_client
+    require 'google/api_client'
+
+    @calendar = Calendar.find(1)
+
+    client = Google::APIClient.new
+    client.authorization.client_id = "759068570332.apps.googleusercontent.com"
+    client.authorization.client_secret = "7amw71XAAyReH92K_LtOp5-a"
+    client.authorization.scope = "https://www.googleapis.com/auth/calendar"
+    client.authorization.refresh_token = @calendar.refresh_token
+    client.authorization.access_token = @calendar.access_token
+
+    service = client.discovered_api('calendar','v3')
+
+    return client, service
+  end
+    
+    
+
 end

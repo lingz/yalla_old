@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
       provider: auth["provider"],
       uid: auth["uid"],
       name: auth["info"]["name"],
-      display_image: auth["info"]["image"]
+      display_image: auth["info"]["image"],
       })
     user.save!
     nyuad.save!
