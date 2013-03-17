@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :display_image, :name, :password, :school_id, :school, :provider, :uid, :user
+  attr_accessible :display_image, :name, :password, :school_id, 
+    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user 
 
   belongs_to :school
 

@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html lang="en">
   <head>
     <title>Name</title>
@@ -11,7 +12,7 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    "bootstrap.css" %>
-    <%= stylesheet_link_tag    "bootstrap-responsive.min.css" %>
+    <%= stylesheet_link_tag    "bootstrap-responsive.css" %>
     <%= stylesheet_link_tag    "bootstrap.icon-large.css" %>
     <%= stylesheet_link_tag    "style.css" %>
 
@@ -19,43 +20,44 @@
   </head>
 
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Navbar -->
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
-          <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right"> 
-              
-              <table><tr style="color:white">
-                  <% if current_user %>
-                  <td><%= current_user.name %></td>
-                  <td><img src="<%= current_user.display_image %>"></td>
-                  <td><img style="max-width:50px" src="<%= current_user.school.image %>"></td>
-                  <td><%= link_to "Sign Out", signout_path %>
-                    <% else %>
-                    <%= form_tag("/sessions/new", method: "post") do %>
-                  <td><%= label_tag(:email, "Email Address:") %></td>
-                  <td><%= text_field_tag(:email) %></td>
-                  <td><input type="image" alt="Register with Facebook" src="/assets/facebook.png" value="Submit"/></td>
-                  <% end %>
-                  <% end %>
-              </tr></table>
-            </p>
-            <ul class="nav">
-              <li><img style="max-width:310px" src="/assets/al-mataqaLogo.gif"/>  </li>
-            </ul>
-          </div><!--/.nav-collapse -->
+        <img id="logo" class="pull-left" src="/assets/logonyu.png">
+        <form class="navbar-search pull-left">
+          <input id="search" type="text" class="span6 input-xxlarge search-query" placeholder="Search">
+        </form>
+        <% if current_user %>
+          <a id="login" class="nav-button btn btn-success pull-right">Logout</a>
+        <% else %>
+          <a id="login" class="nav-button btn btn-primary pull-right" href="/auth/nyu/create">Login</a> 
+        <% end %>
+        <div class="nav-collapse collapse">
+          <a class="nav-button btn pull-right">FAQ</a> 
+          <% if current_user %>
+            <img id="display-image" class="pull-right img-polaroid" src="<%= current_user.display_image %>" class="pull-right">
+            <h5 id="user-name" class="pull-right"><%= current_user.name %></h5>
+          <% end %>
         </div>
       </div>
     </div>
-
-    <%= yield %>
+    <!-- End Navbar -->
+    <div id="main">
+      <div id="overlay">
+        <div id="blackout"></div>
+        <div class="span12" id="prompt">Hello!!!!
+          <img id="exit" src="/assets/exit.png" onclick="hideOverlay()" />
+        </div>
+      </div>
+      <%= yield %>
+    </div>
     <!-- Le javascript
          ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/assets/jquery.js" type="text/javascript"></script>
     <%= javascript_include_tag "jquery.masonry.min.js" %>
     <%= javascript_include_tag "base.js" %>
-
+    <%= javascript_include_tag "bootstrap.js" %>
 
   </body>
 </html>

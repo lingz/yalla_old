@@ -2,9 +2,63 @@
  * Written by Lingliang Zhang
  */
 
+#main
+{
+  padding-top: 60px;
+}
+
+#overlay{
+  position: relative;
+  opacity: 0;
+  z-index: 500;
+  min-width: 600px;
+  width: 1px;
+  height: 1px;
+  display: none;
+}
+
+#blackout{
+  z-index:600;
+  background: rgba(0,0,0,0.5);
+  left: -5px;
+  top: -5px;
+  position:fixed;
+  width: 10000px;
+  height: 100000px;
+}
+
+#prompt{
+  position: absolute;
+  height: 500px;
+  z-index: 700;
+  background: #eeeeee;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  padding:20px 40px;
+}
+#exit{
+  z-index:800;
+  position: absolute;
+  cursor: pointer;
+  right: 30px;
+}
+
+.brand
+{
+  margin-left: 10px !important;
+  margin-right: 20px;
+}
+
+
 .box
 {
   margin: 5px;
+}
+
+.event-btn
+{
+  width: 90px;
+  margin-right: 10px;
 }
 
 .event-container
@@ -65,6 +119,7 @@
 
 .event-title
 {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
   text-align: center;
 }
 
@@ -338,4 +393,47 @@
       -ms-transition-property: left, right, top;
        -o-transition-property: left, right, top;
           transition-property: left, right, top;
+}
+
+#display-image {
+  max-height: 40px;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+#logo {
+  max-height: 30px;
+  margin: 15px;
+  margin-top: 16px;
+}
+
+#search {
+  height: 25px;
+  margin-top: 7px;
+}
+
+.nav-button {
+  margin-top: 15px !important;
+  margin-left: 10px;
+  font-size: 15px;
+  line-height: 25px;
+  height: 25px;
+  width: 60px;
+}
+
+#login {
+  margin-right: 10px;
+  background: #522E91;
+}
+
+#user-name {
+  line-height: 40px;
+}
+
+#content {
+  margin: 0 auto;
+}
+
+#attend-btn {
 }

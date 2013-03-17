@@ -173,6 +173,7 @@ DEPENDENCIES
   httparty
   jquery-rails
   less-rails-bootstrap
+  oauth2
   omniauth
   omniauth-facebook
   rails (= 3.2.11)

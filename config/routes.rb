@@ -5,9 +5,10 @@ Unilink::Application.routes.draw do
 
   match "oauth2callback" => "calendar#callback"
   match "/attend" => "calendars#attend"
-  match "/auth/:provider/callback" => "sessions#create"
+  match "/auth/nyu/callback" => "sessions#nyu_callback"
+  match "/auth/nyu/create" => "sessions#nyu_create"
+  match "/auth/:provider/callback" => "sessions#facebook_create"
   match "/sessions/create" => "sessions#create"
-  match "/sessions/new" => "sessions#new"
   match "/signout" => "sessions#destroy", :as => :signout
 
   resources :events do

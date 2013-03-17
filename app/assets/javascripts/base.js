@@ -12,6 +12,12 @@ $(function(){
     // options
     itemSelector : '.event-container',
     columnWidth : 10,
-    isAnimated: !Modernizr.csstransitions
+    isAnimated: !Modernizr.csstransitions,
+    isFitWidth: true
   });
 });
+
+function showOverlay(){
+  $('#overlay').show().animate({opacity:1}, 300);
+  return false;
+}
