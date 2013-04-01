@@ -425,10 +425,15 @@
 #login {
   margin-right: 10px;
   background: #522E91;
+  color: white;
 }
 
 #user-name {
   line-height: 40px;
+}
+
+.nav-collapse {
+  overflow: hidden;
 }
 
 #content {
@@ -436,4 +441,49 @@
 }
 
 #attend-btn {
+  color: white;
+}
+
+#event-details {
+  padding: 15px 15px 0px 15px;
+}
+
+.detailled-row {
+  margin-bottom: 3px;
+  border: 0px;
+  border-bottom: 1px;
+  border-style: solid;
+}
+
+.icon-large-black {
+  margin-top: 8px;
+  margin-left: 3px;
+}
+
+.map-row {
+  padding-left: 5px;
+}
+
+.detailled-image {
+  min-width: 240px;
+  min-height: 240px;
+  max-width: 240px;
+  max-height: 240px;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+}
+
+.detailled-half {
+  width: 48% !important;
+  float: left !important;
+}
+
+.detailled-image-wrap {
+  padding-left: 10px !important;
+  padding-top: 10px;
+}
+
+.detailled-description {
+  margin-top: 20px;
 }

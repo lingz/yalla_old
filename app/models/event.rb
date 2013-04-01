@@ -1,8 +1,10 @@
 class Event < ActiveRecord::Base
   attr_accessible :description, :end_time, :user_id, :image,
-    :location, :name, :start_time, :status, :unique_id, :ids
+    :location, :name, :start_time, :status, :unique_id, :ids,
+    :user_event_id
 
   has_many :comments
+  has_many :user_events
 
   belongs_to :user
 

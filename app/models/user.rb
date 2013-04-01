@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   attr_accessible :display_image, :name, :password, :school_id, 
-    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user 
+    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user,
+    :user_event_id
 
   belongs_to :school
+  belongs_to :user_event
 
   has_many :emails
   has_many :events

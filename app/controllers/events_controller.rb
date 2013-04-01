@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  layout false, only: :show
   # GET /events
   # GET /events.json
   def index

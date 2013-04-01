@@ -6,8 +6,10 @@ class CalendarsController < ApplicationController
   end
 
   def attend
-    Calendar.add_person(Event.find(params[:event_id]), User.find(session[:user_id]).email)
-    redirect_to '/' 
+    @user = User.find(params[:user_id])
+    @event = Event.find(params[:event_id])
+    Calendar.add_person(@event, @user.email)
+    render json: {success: true, params: params} 
   end
 
   def index

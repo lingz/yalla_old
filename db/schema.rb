@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317072724) do
+ActiveRecord::Schema.define(:version => 20130401110956) do
+
+  create_table "attending_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "calendars", :force => true do |t|
     t.string   "code"
@@ -61,10 +68,11 @@ ActiveRecord::Schema.define(:version => 20130317072724) do
     t.string   "description"
     t.string   "image"
     t.string   "status"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "unique_id"
     t.string   "ids"
+    t.integer  "user_event_id"
   end
 
   create_table "schools", :force => true do |t|
@@ -74,12 +82,21 @@ ActiveRecord::Schema.define(:version => 20130317072724) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "user_events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "email"
+    t.string   "name"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "display_image"
     t.integer  "school_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "provider"
     t.string   "uid"
     t.string   "email"
@@ -87,6 +104,8 @@ ActiveRecord::Schema.define(:version => 20130317072724) do
     t.string   "netID"
     t.string   "nyu_class"
     t.string   "nyu_token"
+    t.string   "secondary_email"
+    t.integer  "user_event_id"
   end
 
 end

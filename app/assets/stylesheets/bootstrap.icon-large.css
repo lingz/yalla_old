@@ -8,10 +8,21 @@
     vertical-align: text-bottom;
     width: 28px;
 }
+.icon-large-black {
+    background-image: url("/assets/glyphicons-black.png");
+    background-position: 24px 24px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: text-bottom;
+    width: 28px;
+}
 .icon-large.icon-glass{ background-position: 0 0;  } 
 .icon-large.icon-leaf{ background-position: 0 -34px;  } 
 .icon-large.icon-dog{ background-position: 0 -69px;  } 
 .icon-large.icon-user{ background-position: 0 -104px;  } 
+.icon-large-black.icon-user{ background-position: 0 -104px;  } 
 .icon-large.icon-girl{ background-position: 0 -136px;  } 
 .icon-large.icon-car{ background-position: 0 -168px;  } 
 .icon-large.icon-user-add{ background-position: 0 -200px;  } 
@@ -19,6 +30,7 @@
 .icon-large.icon-film{ background-position: 0 -264px;  } 
 .icon-large.icon-magic{ background-position: 0 -300px;  } 
 .icon-large.icon-envelope{ background-position: 0 -330px;  } 
+.icon-large-black.icon-envelope{ background-position: 0 -330px;  } 
 .icon-large.icon-camera{ background-position: 0 -360px;  } 
 .icon-large.icon-heart{ background-position: 0 -390px;  } 
 .icon-large.icon-beach-umbrella{ background-position: 0 -422px;  } 
@@ -55,6 +67,7 @@
 .icon-large.icon-group{ background-position: 0 -1436px;  } 
 .icon-large.icon-keys{ background-position: 0 -1468px;  } 
 .icon-large.icon-calendar{ background-position: 0 -1504px;  } 
+.icon-large-black.icon-calendar{ background-position: 0 -1504px;  } 
 .icon-large.icon-router{ background-position: 0 -1539px;  } 
 .icon-large.icon-camera-small{ background-position: 0 -1575px;  } 
 .icon-large.icon-dislikes{ background-position: 0 -1609px;  } 
@@ -66,7 +79,8 @@
 .icon-large.icon-alarm{ background-position: 0 -1771px;  } 
 .icon-large.icon-clock{ background-position: 0 -1807px;  } 
 .icon-large.icon-time{ background-position: 0 -1807px;  } 
-.icon-large.icon-stopwatch{ background-position: 0 -1841px;  } 
+.icon-large-black.icon-time{ background-position: 0 -1807px;  } 
+.icon-large.icon-stopwatch{ background-position: 0 -1841px;  }  
 .icon-large.icon-projector{ background-position: 0 -1878px;  } 
 .icon-large.icon-history{ background-position: 0 -1913px;  } 
 .icon-large.icon-truck{ background-position: 0 -1949px;  } 
@@ -257,6 +271,7 @@
 .icon-large.icon-rotation-lock{ background-position: -138px -1840px;  } 
 .icon-large.icon-flash{ background-position: -138px -1874px;  } 
 .icon-large.icon-google-maps, .icon-large.icon-map-marker{ background-position: -138px -1909px;  } 
+.icon-large-black.icon-google-maps, .icon-large-black.icon-map-marker{ background-position: -138px -1909px;  } 
 .icon-large.icon-anchor{ background-position: -138px -1943px;  } 
 .icon-large.icon-conversation{ background-position: -138px -1978px;  } 
 .icon-large.icon-chat{ background-position: -184px 0;  } 

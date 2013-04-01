@@ -17,7 +17,17 @@ $(function(){
   });
 });
 
-function showOverlay(){
-  $('#overlay').show().animate({opacity:1}, 300);
+function changeHeader(id){
+  $('#myModalLabel').html($("#event-" + id).find(".event-title").html());
+  $('#modal-attend').html($("#event-" + id).find(".attend-btn").html());
+  return false;
+}
+
+$('body').on('hidden', '.modal', function () {
+  $(this).removeData('modal');
+});
+
+function attendEvent(eventID, userID) {
+  $.post("/attend", {event_id: eventID, user_id: userID});
   return false;
 }
