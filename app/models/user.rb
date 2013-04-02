@@ -1,14 +1,11 @@
 class User < ActiveRecord::Base
   attr_accessible :display_image, :name, :password, :school_id, 
-    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user,
-    :user_event_id
+    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user
 
   belongs_to :school
-  belongs_to :user_event
 
-  has_many :emails
-  has_many :events
-  has_many :comments
+  has_many :events, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
 
   def self.authenticate(name, password)
@@ -35,5 +32,16 @@ class User < ActiveRecord::Base
     nyuad.save!
     user
   end
-  
+
+  def self.create_with_netID(netID)
+    response = JSON.parse HTTParty.get("http://passport.sg.nyuad.org/api/info/profile/#{netID}?client=W6zBUB3r2e90r0w24ts01seg3&secret=98j08jpiupiuy7dfy3yn").to_json
+    # check if netID is valid
+    if response["message"]
+      return nil
+    end
+    nyuad = School.find_by_name("NYUAD")
+    user = nyuad.users.create(name: response["name"], netID: netID,
+                nyu_class: response["class"], email: "#{netID}@nyu.edu",
+                display_image: '/assets/nyuad.jpg')
+  end
 end

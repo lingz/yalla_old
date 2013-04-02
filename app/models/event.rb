@@ -3,8 +3,8 @@ class Event < ActiveRecord::Base
     :location, :name, :start_time, :status, :unique_id, :ids,
     :user_event_id
 
-  has_many :comments
-  has_many :user_events
+  has_many :comments, dependent: :destroy
+  has_many :user_events, dependent: :destroy
 
   belongs_to :user
 

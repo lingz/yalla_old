@@ -1,14 +1,24 @@
 class CalendarsController < ApplicationController
+  layout false
   # GET /calendars
   # GET /calendars.json
 
   def callback
   end
 
+  def update
+    if Calendar.find(1).last_update.advance(seconds: 5) < DateTime.now
+      update = Calendar.calendar_update
+      render json: {success: true, update: update.to_s}
+    else
+      render json: {success: false, update: "Last update was too recently"}
+    end
+  end
+
   def attend
     @user = User.find(params[:user_id])
     @event = Event.find(params[:event_id])
-    Calendar.add_person(@event, @user.email)
+    Calendar.add_person(@event, @user)
     render json: {success: true, params: params} 
   end
 
@@ -59,22 +69,6 @@ class CalendarsController < ApplicationController
         format.json { render json: @calendar, status: :created, location: @calendar }
       else
         format.html { render action: "new" }
-        format.json { render json: @calendar.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /calendars/1
-  # PUT /calendars/1.json
-  def update
-    @calendar = Calendar.find(params[:id])
-
-    respond_to do |format|
-      if @calendar.update_attributes(params[:calendar])
-        format.html { redirect_to @calendar, notice: 'Calendar was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
         format.json { render json: @calendar.errors, status: :unprocessable_entity }
       end
     end

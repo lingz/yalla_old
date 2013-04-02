@@ -4,6 +4,7 @@ Unilink::Application.routes.draw do
 
 
   match "oauth2callback" => "calendar#callback"
+  match "/update" => "calendars#update", :via => :post
   match "/attend" => "calendars#attend", :via => :post
   match "/auth/nyu/callback" => "sessions#nyu_callback"
   match "/auth/nyu/create" => "sessions#nyu_create"

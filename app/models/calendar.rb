@@ -55,11 +55,40 @@ class Calendar < ActiveRecord::Base
         end
         user = User.find_by_email(event["creator"]["email"])
         # check if the user exists in the system (so that have permission to be added) 
+        # Bounce off Oauth to see if email address is valid
+
         if user
           params[:user_id] =  user.id
           old_event = Event.find_by_unique_id(params[:unique_id])
           # if the event already exists, update it
           if old_event
+            # update attendance links
+            event["attendees"].each do |attendee|
+              # ignore this for the host and the events system
+              if attendee["email"] != "almultaqa.events@gmail.com" and attendee["email"] != user.email
+                # search for if the attendee has an account
+                attendee_user = User.find_by_email(attendee["email"])
+                # if the attendee hsa an account in the system
+                if attendee_user
+                  # search for the link in the system
+                  link = UserEvent.find_by_event_id_and_user_id(old_event.id, attendee_user.id)
+                  # if the user is accepted
+                  if attendee["responseStatus"] != "declined" 
+                      old_event.user_events.create(user_id: attendee_user.id) if !link
+                  # the event has been declined
+                  elsif link
+                    link.destroy
+                  end
+                else
+                  link = UserEvent.find_by_email_and_name(attendee["email"], attendee["displayName"])
+                  if attendee["responseStatus"] != "declined" 
+                    old_event.user_events.create(email: attendee["email"], name: attendee["displayName"]) if !link
+                  elsif link
+                    link.destroy
+                  end
+                end
+              end
+            end
             old_event.update_attributes(params)
             old_event.save!
           # otherwise create a new event
@@ -98,7 +127,9 @@ class Calendar < ActiveRecord::Base
     events_list = result.data.items
   end
 
-  def self.add_person(event, email)
+  def self.add_person(eventID, userID)
+    user = User.find(userID)
+    event = Event.find(eventID)
     @calendar = Calendar.find(1)
 
     client, service = self.get_client
@@ -106,13 +137,15 @@ class Calendar < ActiveRecord::Base
     result = client.execute(:api_method => service.events.get,
                         :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
     result = result.data
-    result.attendees[1].email=email
+    new_person = result.attendees[0].class.new
+    new_person.email = user.email
+    new_person.display_name = user.name
+    new_person.response_status = "accepted"
+    result.attendees = result.attendees << new_person
     result = client.execute(:api_method => service.events.update,
                             :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids},
                             :body_object => result,
                             :headers => {'Content-Type' => 'application/json'})
-    print result.data.updated
-    
   end
 
   def self.get_client
@@ -131,7 +164,4 @@ class Calendar < ActiveRecord::Base
 
     return client, service
   end
-    
-    
-
 end

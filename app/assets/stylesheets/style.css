@@ -123,9 +123,10 @@
   text-align: center;
 }
 
-.event-detail-container
+#event-details-container
 {
-  padding-top: 10px;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .event-detail
@@ -177,6 +178,7 @@
 .event-description
 {
   padding-top: 10px;
+  overflow: hidden;
 }
 
 .filter1
@@ -442,6 +444,8 @@
 
 #attend-btn {
   color: white;
+  position:absolute;
+  z-index:2;
 }
 
 #event-details {
@@ -486,4 +490,36 @@
 
 .detailled-description {
   margin-top: 20px;
+}
+
+#success-btn{
+  opacity: 0;
+  z-index: 1;
+  position: absolute;
+}
+
+/** Masonry CSS Transitions **/
+.masonry,
+.masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+     -moz-transition-duration: 0.7s;
+      -ms-transition-duration: 0.7s;
+       -o-transition-duration: 0.7s;
+          transition-duration: 0.7s;
+}
+
+.masonry {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+     -moz-transition-property: left, right, top;
+      -ms-transition-property: left, right, top;
+       -o-transition-property: left, right, top;
+          transition-property: left, right, top;
 }

@@ -7,6 +7,10 @@
  * Base js functions
  */
 
+$(document).ready(function(){
+  $.post("/update", {});
+  });
+
 $(function(){
   $('#content').masonry({
     // options
@@ -28,6 +32,11 @@ $('body').on('hidden', '.modal', function () {
 });
 
 function attendEvent(eventID, userID) {
+  $("#event-" + eventID).find("#attend-btn").animate({opacity: 0});
+  $("#event-" + eventID).find("#success-btn").animate({opacity: 1});
   $.post("/attend", {event_id: eventID, user_id: userID});
+  $.post("/update", {});
   return false;
 }
+
+

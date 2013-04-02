@@ -4,6 +4,13 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+    # search for events that the current user is attending
+    @attendance_keys = []
+    if current_user
+      UserEvent.find(:all, conditions: {user_id: current_user.id}).each do |link|
+        @attendance_keys << link.event_id
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb

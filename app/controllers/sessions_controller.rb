@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def create
     session[:user_id] = User.find_by_netID(params[:netID]) ||
-    User.create(name: params[:name], netID: params[:netID],
+    School.find_by_name("NYUAD").users.create(name: params[:name], netID: params[:netID],
                 nyu_class: params[:nyu_class], nyu_token: params[:nyu_token],
                 email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
     redirect_to root_url
