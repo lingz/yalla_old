@@ -9,7 +9,23 @@
 
 $(document).ready(function(){
   $.post("/update", {});
+  $(".navbar-search").width($(window).width()-780);
   });
+
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token',
+                             $('meta[name="csrf-token"]').attr('content'));
+    }
+});
+
+$(window).resize(function(){
+  if ($(window).width() > 980) {
+    $(".navbar-search").width($(window).width()-780);
+  } else {
+    $(".navbar-search").css("width", "");
+  }
+});
 
 $(function(){
   $('#content').masonry({

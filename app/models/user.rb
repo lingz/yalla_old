@@ -1,11 +1,17 @@
 class User < ActiveRecord::Base
   attr_accessible :display_image, :name, :password, :school_id, 
-    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user
+    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user, :remember_token
 
   belongs_to :school
 
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
+
+  before_save :create_remember_token
+
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
 
 
   def self.authenticate(name, password)

@@ -57,8 +57,18 @@
 
 .event-btn
 {
-  width: 90px;
-  margin-right: 10px;
+  width: 27% !important;
+}
+
+.see-more {
+  float: right;
+  width: 35% !important;
+}
+
+.event-btn-container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 .event-container
@@ -67,7 +77,7 @@
   border-radius: 20px;
   margin-bottom: 15px;
   float: left;
-  min-width: 300px;
+  min-width: 350px;
   max-width: 600px;
   margin: 10px;
 }
@@ -412,8 +422,14 @@
 
 #search {
   height: 25px;
+  width: 100%;
   margin-top: 7px;
 }
+
+.navbar-search {
+  margin-left: 10px;
+}
+
 
 .nav-button {
   margin-top: 15px !important;
@@ -447,6 +463,12 @@
   position:absolute;
   z-index:2;
 }
+
+.attend-btn {
+  height: 100%;
+  width: 100%;
+}
+
 
 #event-details {
   padding: 15px 15px 0px 15px;

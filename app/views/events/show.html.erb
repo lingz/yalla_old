@@ -40,7 +40,7 @@
           <i class="icon-large-black icon-envelope"></i>
         </div>
         <div class="span10">
-          <h5 class="event-parameter">Attendees: 9</h5>
+          <h5 class="event-parameter">Attendees: <%= @event.user_events.count + 1 %></h5>
         </div>
       </div>
       <div class="detailled-row event-detail row-fluid">
@@ -54,7 +54,7 @@
     </div>
     <div class="detailled-image-wrap detailled-half span6">
       <div class="detailled-image" style="background-image: url(      
-        <% if @event.image.nil? %>
+        <% if @event.image.include? "nyudefault" %>
           /assets/nyuad.jpg
         <% else %>
           <%= @event.image %>

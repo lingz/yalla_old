@@ -1,9 +1,11 @@
 class SessionsController < ApplicationController
   def create
-    session[:user_id] = User.find_by_netID(params[:netID]) ||
+    user = User.find_by_netID(params[:netID]) ||
     School.find_by_name("NYUAD").users.create(name: params[:name], netID: params[:netID],
                 nyu_class: params[:nyu_class], nyu_token: params[:nyu_token],
                 email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
+    session[:user_id] = user
+    cookies.permanent[:remember_token] = user.remember_token
     redirect_to root_url
   end
     
@@ -17,7 +19,8 @@ class SessionsController < ApplicationController
   end
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, :notice => "Signed out!"
+    cookies.delete(:remember_token)
+    redirect_to "http://passport.sg.nyuad.org/auth/logout" 
   end
   def nyu_create
     client = OAuth2::Client.new('W6zBUB3r2e90r0w24ts01seg3', '98j08jpiupiuy7dfy3yn', 

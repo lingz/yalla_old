@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402104830) do
+ActiveRecord::Schema.define(:version => 20130404084348) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130402104830) do
     t.datetime "updated_at",    :null => false
     t.string   "calendar_id"
     t.datetime "last_update"
+    t.datetime "last_cleanup"
   end
 
   create_table "comments", :force => true do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130402104830) do
     t.string   "unique_id"
     t.string   "ids"
     t.integer  "user_event_id"
+    t.string   "blurb"
   end
 
   create_table "schools", :force => true do |t|
@@ -89,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20130402104830) do
     t.datetime "updated_at", :null => false
     t.string   "email"
     t.string   "name"
+    t.boolean  "status"
   end
 
   create_table "users", :force => true do |t|
@@ -105,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130402104830) do
     t.string   "nyu_class"
     t.string   "nyu_token"
     t.string   "secondary_email"
+    t.string   "remember_token"
   end
 
 end

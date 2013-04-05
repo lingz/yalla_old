@@ -12,9 +12,9 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    "bootstrap.css" %>
-    <%= stylesheet_link_tag    "bootstrap-responsive.css" %>
     <%= stylesheet_link_tag    "bootstrap.icon-large.css" %>
     <%= stylesheet_link_tag    "style.css" %>
+    <%= stylesheet_link_tag    "bootstrap-responsive.css" %>
 
   </head>
 
@@ -27,7 +27,7 @@
           <input id="search" type="text" class="span6 input-xxlarge search-query" placeholder="Search">
         </form>
         <% if current_user %>
-          <a id="login" class="nav-button btn btn-success pull-right">Logout</a>
+          <a href="/signout" id="login" class="nav-button btn btn-success pull-right">Logout</a>
         <% else %>
           <a id="login" class="nav-button btn btn-primary pull-right" href="/auth/nyu/create">Login</a> 
         <% end %>
@@ -42,12 +42,6 @@
     </div>
     <!-- End Navbar -->
     <div id="main">
-      <div id="overlay">
-        <div id="blackout"></div>
-        <div class="span12" id="prompt">Hello!!!!
-          <img id="exit" src="/assets/exit.png" onclick="hideOverlay()" />
-        </div>
-      </div>
       <%= yield %>
     </div>
     <!-- Begin Modal -->

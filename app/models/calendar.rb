@@ -37,7 +37,7 @@ class Calendar < ActiveRecord::Base
     if !events.nil? 
     events.each do |event|
       #if the events are confirmed, then create / update them
-      if event["status"] == "confirmed"
+      if event["status"] != "cancelled"
         params = {name: event["summary"],
           location: event["location"],
           description: event["description"],
@@ -53,10 +53,12 @@ class Calendar < ActiveRecord::Base
           params[:start_time] = event["start"]["dateTime"].to_datetime
           params[:end_time] = event["end"]["dateTime"].to_datetime
         end
-        user = User.find_by_email(event["creator"]["email"])
+        user = User.find_by_email(event["creator"]["email"]) || 
+          User.create_with_netID(event["creator"]["email"].match(/(.*?)@nyu.edu/)[0][$1])
         # check if the user exists in the system (so that have permission to be added) 
         # Bounce off Oauth to see if email address is valid
-
+        puts user
+        
         if user
           params[:user_id] =  user.id
           old_event = Event.find_by_unique_id(params[:unique_id])
@@ -66,25 +68,27 @@ class Calendar < ActiveRecord::Base
             event["attendees"].each do |attendee|
               # ignore this for the host and the events system
               if attendee["email"] != "almultaqa.events@gmail.com" and attendee["email"] != user.email
-                # search for if the attendee has an account
-                attendee_user = User.find_by_email(attendee["email"])
+                # search for if the attendee has an account or is in nyuad
+                attendee_user = User.find_by_email(attendee["email"]) || User.create_with_netID(attendee["email"].match(/(.*?)@nyu.edu/)[0][$1])
                 # if the attendee hsa an account in the system
                 if attendee_user
                   # search for the link in the system
                   link = UserEvent.find_by_event_id_and_user_id(old_event.id, attendee_user.id)
                   # if the user is accepted
-                  if attendee["responseStatus"] != "declined" 
-                      old_event.user_events.create(user_id: attendee_user.id) if !link
+                  if attendee["responseStatus"] != "declined"
+                    old_event.user_events.create(user_id: attendee_user.id, status: true) if !link
                   # the event has been declined
                   elsif link
-                    link.destroy
+                    link.status = false
+                    link.save!
                   end
                 else
                   link = UserEvent.find_by_email_and_name(attendee["email"], attendee["displayName"])
-                  if attendee["responseStatus"] != "declined" 
-                    old_event.user_events.create(email: attendee["email"], name: attendee["displayName"]) if !link
+                  if attendee["responseStatus"] != "declined"
+                    old_event.user_events.create(email: attendee["email"], name: attendee["displayName"], status:true) if !link
                   elsif link
-                    link.destroy
+                    link.status = false
+                    link.save!
                   end
                 end
               end
@@ -121,7 +125,7 @@ class Calendar < ActiveRecord::Base
     
     result = client.execute(api_method: service.events.list,
                             parameters: {'calendarId' => @calendar.calendar_id,
-                                         'timeMin' => DateTime.now.advance(hours: 4).strftime('%Y-%m-%dT%H:%M:%SZ'),
+                                         'timeMin' => DateTime.now.strftime('%Y-%m-%dT%H:%M:%SZ'),
                                          'updatedMin' => @calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ'),
                                          'showDeleted' => true})
     events_list = result.data.items
@@ -164,4 +168,11 @@ class Calendar < ActiveRecord::Base
 
     return client, service
   end
+
+  def self.cleanup
+    Event.all.each do |event|
+        event.destroy if event.start_time < DateTime.now.advance(hours: 1)
+    end
+  end
+
 end

@@ -7,11 +7,17 @@ class CalendarsController < ApplicationController
   end
 
   def update
-    if Calendar.find(1).last_update.advance(seconds: 5) < DateTime.now
+    @calendar = Calendar.find(1)
+    if !@calendar.last_update || @calendar.last_update.advance(seconds: 5) < DateTime.now
+      @calendar.last_update = DateTime.now
       update = Calendar.calendar_update
       render json: {success: true, update: update.to_s}
     else
       render json: {success: false, update: "Last update was too recently"}
+    end
+    if !@calendar.last_cleanup || @calendar.last_update.advance(minutes: 30) < DateTime.now
+      @calendar.last_cleanup = DateTime.now
+      Calendar.cleanup
     end
   end
 
