@@ -147,7 +147,7 @@ class Calendar < ActiveRecord::Base
     new_person.response_status = "accepted"
     result.attendees = result.attendees << new_person
     result = client.execute(:api_method => service.events.update,
-                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications' => true},
+                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids},
                             :body_object => result,
                             :headers => {'Content-Type' => 'application/json'})
   end
