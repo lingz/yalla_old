@@ -118,7 +118,7 @@ class Calendar < ActiveRecord::Base
     @calendar = Calendar.find(1)
     puts("https://www.googleapis.com/calendar/v3/calendars/\
 #{@calendar.calendar_id}/events?access_token=#{@calendar.access_token}\
-&timeMin=#{DateTime.now.advance(hours: -4).strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
+&timeMin=#{DateTime.now.strftime('%Y-%m-%dT%H:%M:%SZ')}&updatedMin=#{@calendar.last_update.strftime('%Y-%m-%dT%H:%M:%SZ')}\
 &showDeleted=true")
     
     client, service = self.get_client
