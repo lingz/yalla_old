@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+  
+  def default_url_options
+    if Rails.env.production?
+      { :host => "yalla.herokuapp.com"}
+    else
+      {:host => "localhost:3000"}
+    end
+  end
   def current_user
     @_current_user ||= session[:user_id] && User.find_by_id(session[:user_id])
     if !@_current_user
