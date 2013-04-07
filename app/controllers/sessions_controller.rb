@@ -26,7 +26,9 @@ class SessionsController < ApplicationController
     client = OAuth2::Client.new('W6zBUB3r2e90r0w24ts01seg3', '98j08jpiupiuy7dfy3yn', 
                                 site: 'http://passport.sg.nyuad.org/', 
                                 authorize_url: "/visa/oauth/authorize", token_url: "/visa/oauth/token")
-    auth_url = client.auth_code.authorize_url(redirect_uri: root_url + '/auth/nyu/callback')
+    Rails.logger.debug(root_url)
+    Rails.logger.debug(root_url + 'auth/nyu/callback')
+    auth_url = client.auth_code.authorize_url(redirect_uri: root_url + 'auth/nyu/callback')
     redirect_to auth_url
   end
   def nyu_callback

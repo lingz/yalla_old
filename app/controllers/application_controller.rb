@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     if Rails.env.production?
       { :host => "yalla.herokuapp.com"}
     else
-      {:host => "localhost:3000"}
+      {:host => "localhost", port: 3000}
     end
   end
   def current_user
