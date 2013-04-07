@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130407185252) do
+ActiveRecord::Schema.define(:version => 20130407190700) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20130407185252) do
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "description"
+    t.text     "description"
     t.integer  "event_id"
     t.integer  "user_id"
     t.datetime "created_at",  :null => false
@@ -50,25 +50,25 @@ ActiveRecord::Schema.define(:version => 20130407185252) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "user_id"
-    t.string   "location"
+    t.text     "location"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string   "description"
-    t.string   "image"
+    t.text     "description"
+    t.text     "image"
     t.string   "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "unique_id"
     t.string   "ids"
     t.integer  "user_event_id"
-    t.string   "blurb"
+    t.text     "blurb"
   end
 
   create_table "schools", :force => true do |t|
     t.string   "name"
-    t.string   "image"
+    t.text     "image"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -79,13 +79,13 @@ ActiveRecord::Schema.define(:version => 20130407185252) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "email"
-    t.string   "name"
+    t.text     "name"
     t.boolean  "status"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "display_image"
+    t.text     "name"
+    t.text     "display_image"
     t.integer  "school_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20130407185252) do
     t.string   "ids"
     t.string   "netID"
     t.string   "nyu_class"
-    t.string   "nyu_token"
+    t.text     "nyu_token"
     t.string   "secondary_email"
     t.string   "remember_token"
   end
