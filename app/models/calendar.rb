@@ -67,7 +67,7 @@ class Calendar < ActiveRecord::Base
             # update attendance links
             event["attendees"].each do |attendee|
               # ignore this for the host and the events system
-              if attendee["email"] != "almultaqa.events@gmail.com" and attendee["email"] != user.email
+              if attendee["email"] != "nyuad.yalla@gmail.com" and attendee["email"] != user.email
                 # search for if the attendee has an account or is in nyuad
                 attendee_user = User.find_by_email(attendee["email"]) || User.create_with_netID(attendee["email"].match(/(.*?)@nyu.edu/)[0][$1])
                 # if the attendee hsa an account in the system
@@ -147,7 +147,7 @@ class Calendar < ActiveRecord::Base
     new_person.response_status = "accepted"
     result.attendees = result.attendees << new_person
     result = client.execute(:api_method => service.events.update,
-                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids},
+                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications': true},
                             :body_object => result,
                             :headers => {'Content-Type' => 'application/json'})
   end

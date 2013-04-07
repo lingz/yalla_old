@@ -25,6 +25,9 @@ class Event < ActiveRecord::Base
   end
 
   def apply_filters
+    if !self.filter
+      self.filter = rand(1..9)
+    end
     match = self.description.match /http.*?\.(jpeg|jpg|gif|png)/ if self.description
     if match
       self.image = match[0]
