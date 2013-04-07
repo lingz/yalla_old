@@ -28,9 +28,9 @@
           <a id="login" class="nav-button btn btn-primary pull-right" href="/login">Login</a> 
         <% end %>
           <a class="nav-button btn pull-right visible-desktop">FAQ</a> 
-        <a id="add-event" class="nav-button btn btn-success pull-right hidden-phone" href="#">Add Event</a> 
+          <!-- <a id="add-event" class="nav-button btn btn-success pull-right hidden-phone" href="#">Add Event</a>  -->
         <% if current_user %>
-          <img id="display-image" class="pull-right img-polaroid visible-desktop" src="<%= current_user.display_image %>" class="pull-right">
+          <!-- <img id="display-image" class="pull-right img-polaroid visible-desktop" src="<%= current_user.display_image %>" class="pull-right"> -->
           <h5 id="user-name" class="pull-right visible-desktop"><%= current_user.name %></h5>
           <% end %>
       </div>

@@ -35,11 +35,11 @@ $(function(){
 
 function searchLength(){
   if ($(window).width() > 892) {
-    $(".navbar-search").width($(window).width()-780);
+    $(".navbar-search").width($(window).width()-650);
   } else if ($(window).width() > 697){
-    $(".navbar-search").width($(window).width()-480);
+    $(".navbar-search").width($(window).width()-350);
   }else {
-    $(".navbar-search").width($(window).width()-250);
+    $(".navbar-search").width($(window).width()-230);
 }}
 
 
