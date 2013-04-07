@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :user
 
-  validate :start_time_cannot_be_in_the_past, :end_time_cannot_be_before_start_time
+  validate :end_time_cannot_be_before_start_time
 
   before_save :apply_filters
 

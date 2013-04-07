@@ -7,7 +7,7 @@ Unilink::Application.routes.draw do
   match "/update" => "calendars#update", :via => :post
   match "/attend" => "calendars#attend", :via => :post
   match "/auth/nyu/callback" => "sessions#nyu_callback"
-  match "/auth/nyu/create" => "sessions#nyu_create"
+  match "/login" => "sessions#nyu_create"
   match "/auth/:provider/callback" => "sessions#facebook_create"
   match "/sessions/create" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
@@ -15,15 +15,6 @@ Unilink::Application.routes.draw do
   resources :events do
     resources :comments
   end
-
-  resources :users
-
-
-  resources :schools
-
-
-  get "home/index"
-  get "calendar/callback"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

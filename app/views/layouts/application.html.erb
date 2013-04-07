@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title>Name</title>
+    <title>Yalla!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -22,22 +22,22 @@
     <!-- Navbar -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <img id="logo" class="pull-left" src="/assets/logonyu.png">
+        <img id="logo" class="pull-left hidden-phone" src="/assets/logofull.png">
+        <img id="logo" class="pull-left visible-phone" src="/assets/logoshort.png">
         <form class="navbar-search pull-left">
           <input id="search" type="text" class="span6 input-xxlarge search-query" placeholder="Search">
         </form>
         <% if current_user %>
           <a href="/signout" id="login" class="nav-button btn btn-success pull-right">Logout</a>
         <% else %>
-          <a id="login" class="nav-button btn btn-primary pull-right" href="/auth/nyu/create">Login</a> 
+          <a id="login" class="nav-button btn btn-primary pull-right" href="/login">Login</a> 
         <% end %>
-        <div class="nav-collapse collapse">
-          <a class="nav-button btn pull-right">FAQ</a> 
-          <% if current_user %>
-            <img id="display-image" class="pull-right img-polaroid" src="<%= current_user.display_image %>" class="pull-right">
-            <h5 id="user-name" class="pull-right"><%= current_user.name %></h5>
+          <a class="nav-button btn pull-right visible-desktop">FAQ</a> 
+        <a id="add-event" class="nav-button btn btn-success pull-right hidden-phone" href="#">Add Event</a> 
+        <% if current_user %>
+          <img id="display-image" class="pull-right img-polaroid visible-desktop" src="<%= current_user.display_image %>" class="pull-right">
+          <h5 id="user-name" class="pull-right visible-desktop"><%= current_user.name %></h5>
           <% end %>
-        </div>
       </div>
     </div>
     <!-- End Navbar -->

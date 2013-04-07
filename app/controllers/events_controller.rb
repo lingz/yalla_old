@@ -15,12 +15,14 @@ class EventsController < ApplicationController
           @cancelled_keys << link.event_id
         end
       end
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @events }
+      end
+    else
+      redirect_to "/login"
     end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @events }
-    end
   end
 
   # GET /events/1

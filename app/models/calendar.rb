@@ -171,7 +171,7 @@ class Calendar < ActiveRecord::Base
 
   def self.cleanup
     Event.all.each do |event|
-        event.destroy if event.start_time < DateTime.now.advance(hours: 1)
+      event.destroy if event.end_time < DateTime.now.advance(hours: 1)
     end
   end
 
