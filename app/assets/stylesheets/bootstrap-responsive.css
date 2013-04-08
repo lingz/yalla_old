@@ -948,7 +948,19 @@
     position: static;
   }
   #main {
-    padding-top: 0px !important;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -20px;
+  }
+  .navbar-inner {
+    padding: 5px 15px !important;
+  }
+  #logo {
+    margin-left: 10px;
+    margin-right: 0px;
+  }
+  body {
+    padding: 5px;
   }
 }
 

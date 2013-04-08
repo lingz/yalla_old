@@ -34,13 +34,16 @@ $(function(){
 });
 
 function searchLength(){
-  if ($(window).width() > 892) {
+  if ($(window).width() > 960) {
     $(".navbar-search").width($(window).width()-650);
-  } else if ($(window).width() > 697){
+  } else if ($(window).width() > 760){
     $(".navbar-search").width($(window).width()-350);
-  }else {
-    $(".navbar-search").width($(window).width()-230);
-}}
+  }else if ($(window).width() > 480){
+    $(".navbar-search").width($(window).width()-250);
+  } else{
+    $(".navbar-search").width($(window).width()-190);
+  }
+}
 
 
 function changeHeader(id){
