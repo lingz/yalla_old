@@ -8,6 +8,9 @@ class EventsController < ApplicationController
     @attendance_keys = []
     @cancelled_keys = []
     if current_user
+      user = current_user
+      user.visits += 1
+      user.save!
       UserEvent.find(:all, conditions: {user_id: current_user.id}).each do |link|
         if link.status == true
           @attendance_keys << link.event_id

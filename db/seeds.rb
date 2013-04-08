@@ -13,7 +13,8 @@ calendar = Calendar.create({code: "4/4Mt_ULTtrxwsNq_osEgXcepzwe9D.4mHA91ZWNwQYaD
                            access_token: "ya29.AHES6ZQQk4viAeJNsnx9HKbigvCttSGrgDbxOSfyI4XDFEpkRLcddQkkk",
                            refresh_token: "1/m6hI1KK-dLsFyD6jnLaTaNao9QMk-86pLE_0-6h_LdU",
                            calendar_id: "nyuad.yalla@gmail.com",
-                           last_update: DateTime.now.advance(days: -7)})
+                           last_update: DateTime.now.advance(days: -7),
+                           calls: 0})
 calendar.save!
 
 nyuad = School.create({name: "NYUAD", image: "/assets/nyuad.jpg"})

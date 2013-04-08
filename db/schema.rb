@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408103428) do
+ActiveRecord::Schema.define(:version => 20130408203852) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130408103428) do
     t.string   "calendar_id"
     t.datetime "last_update"
     t.datetime "last_cleanup"
+    t.integer  "calls"
   end
 
   create_table "comments", :force => true do |t|

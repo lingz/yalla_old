@@ -1,7 +1,7 @@
 class Calendar < ActiveRecord::Base
   attr_accessible :access_token, :client_id, :client_secret, :code, :redirect_uri,
-    :refresh_token, :calendar_id, :last_update
-
+    :refresh_token, :calendar_id, :last_update, :calls
+  
   def self.update_token
     @calendar = Calendar.find(1)
     data = {
@@ -156,6 +156,8 @@ class Calendar < ActiveRecord::Base
     require 'google/api_client'
 
     @calendar = Calendar.find(1)
+    @calendar.calls += 1
+    @calendar.save!
 
     client = Google::APIClient.new
     client.authorization.client_id = "759068570332.apps.googleusercontent.com"

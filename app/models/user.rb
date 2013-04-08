@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :display_image, :name, :password, :school_id, 
-    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user, :remember_token
+    :school, :provider, :uid, :netID, :nyu_class, :nyu_token, :email, :user, :remember_token, :visits
 
   belongs_to :school
 
@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
+    self.visits ||= 0
   end
 
 
