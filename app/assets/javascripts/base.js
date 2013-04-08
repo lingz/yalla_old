@@ -10,7 +10,6 @@
 $(document).ready(function(){
   $.post("/update", {});
   searchLength();
-  $("a.group1").colorbox();
   setTimeout(function(){$("a.group1")[0].click();}, 500);
   });
 
