@@ -76,6 +76,11 @@
     <%= javascript_include_tag "jquery-ui-1.10.2.custom.js" %>
     <%= javascript_include_tag "base.js" %>
     <%= javascript_include_tag "bootstrap.js" %>
+    <% if params[:event_id] %>
+      <script type="text/javascript">
+        $("#event-<%= params[:event_id] %>").find("#more-btn").click();
+      </script>
+    <% end %>
 
   </body>
 </html>

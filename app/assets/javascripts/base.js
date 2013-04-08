@@ -46,20 +46,28 @@ function searchLength(){
   }
 }
 
+$('#myModal').on('hidden', function () {
+  $(".modal-body").html("<p>Loading...</p>");
+
+})
 
 function changeHeader(id){
+  window.history.pushState("", id.toString(), "?event_id=" + id.toString());
   $('#myModalLabel').html($("#event-" + id).find(".event-title").html());
   $('#modal-attend').html($("#event-" + id).find(".attend-btn").html());
   return false;
 }
 function showFaq(){
+  window.history.pushState("", "faq", "?modal=faq");
   $('#myModalLabel').html("Yalla! FAQ");
   $('#modal-attend').html("");
   return false;
 }
 
-$('body').on('hidden', '.modal', function () {
+$('#myModal').on('hidden', function () {
   $(this).removeData('modal');
+  $('#modal-attend').html("");
+  window.history.pushState("", "home", "?");
 });
 
 function attendEvent(eventID, userID) {
