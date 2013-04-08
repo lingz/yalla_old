@@ -1,5 +1,7 @@
 Unilink::Application.routes.draw do
 
+  get "pages/faq"
+
   resources :calendars
 
 
@@ -11,10 +13,12 @@ Unilink::Application.routes.draw do
   match "/auth/:provider/callback" => "sessions#facebook_create"
   match "/sessions/create" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
+  match "/pages/:action/" => "pages#:action"
 
   resources :events do
     resources :comments
   end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

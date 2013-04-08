@@ -28,7 +28,7 @@
         <% else %>
           <a id="login" class="nav-button btn btn-primary pull-right" href="/login">Login</a> 
         <% end %>
-          <a class="nav-button btn pull-right visible-desktop">FAQ</a> 
+          <a href="/pages/faq" role="button" data-target="#myModal" data-toggle="modal" onClick="showFaq()" class="nav-button btn pull-right visible-desktop">FAQ</a> 
           <!-- <a id="add-event" class="nav-button btn btn-success pull-right hidden-phone" href="#">Add Event</a>  -->
         <% if current_user %>
           <!-- <img id="display-image" class="pull-right img-polaroid visible-desktop" src="<%= current_user.display_image %>" class="pull-right"> -->
@@ -48,7 +48,7 @@
         <h3 id="myModalLabel">Modal header</h3>
       </div>
       <div class="modal-body">
-        <p>One fine body…</p>
+        <p>Loading...</p>
       </div>
       <div class="modal-footer">
         <span id="modal-attend" class="pull-left"></span>

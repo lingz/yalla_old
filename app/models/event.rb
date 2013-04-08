@@ -28,7 +28,7 @@ class Event < ActiveRecord::Base
     if !self.filter
       self.filter = rand(1..9)
     end
-    match = self.description.match /http.*?\.(jpeg|jpg|gif|png)/ if self.description
+    match = self.description.match /http.*?\.(jpeg|jpg|gif|png|JPG|JPEG|GIF|PNG)/ if self.description
     if match
       self.image = match[0]
       self.description = self.description.sub(match[0], "")

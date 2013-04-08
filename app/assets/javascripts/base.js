@@ -51,6 +51,11 @@ function changeHeader(id){
   $('#modal-attend').html($("#event-" + id).find(".attend-btn").html());
   return false;
 }
+function showFaq(){
+  $('#myModalLabel').html("Yalla! FAQ");
+  $('#modal-attend').html("");
+  return false;
+}
 
 $('body').on('hidden', '.modal', function () {
   $(this).removeData('modal');
