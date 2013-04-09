@@ -96,6 +96,23 @@
     <%= javascript_include_tag "bootstrap.js" %>
     <%= javascript_include_tag "jquery.colorbox-min.js" %>
     <%= javascript_include_tag "colorbox.js" %>
+    <% if current_user.state.nil? and user_agent == "None" %>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          setTimeout(function(){$("#intro-first").click();}, 500);
+          });
+      </script>
+      <% current_user.set_state(1) %>
+    <% end %>
+    <% if user_agent == "iOS" %>
+      <%= javascript_include_tag "mobile.js" %>
+      <%= javascript_include_tag "add2home.js" %>
+    <% end %>
+    <% if params[:event_id] %>
+      <script type="text/javascript">
+        $("#event-<%= params[:event_id] %>").find("#more-btn").click();
+      </script>
+    <% end %>
 
 
   </body>
