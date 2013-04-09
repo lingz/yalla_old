@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
-  layout false, only: :show
-  layout 'events', only: :index
+  layout 'events', except: :show
   # GET /events
   # GET /events.json
   def index
@@ -33,11 +32,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @event }
-    end
+    render layout: false
   end
 
   # GET /events/new
