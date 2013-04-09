@@ -13,6 +13,7 @@ Unilink::Application.routes.draw do
   match "/auth/:provider/callback" => "sessions#facebook_create"
   match "/sessions/create" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
+  match "/passthrough" => "pages#passthrough"
   match "/pages/:action/" => "pages#:action"
 
   resources :events do

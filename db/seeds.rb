@@ -25,3 +25,12 @@ nyuad.save!
 claflin.save!
 zayed.save!
 
+guest1 = User.create({name: "Guest 1"})
+guest2 = User.create({name: "Guest 2"})
+guest3 = User.create({name: "Guest 3"})
+guest4 = User.create({name: "Guest 4"})
+
+guest1.save!
+guest2.save!
+guest3.save!
+guest4.save!

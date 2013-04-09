@@ -16,10 +16,24 @@ class ApplicationController < ActionController::Base
     @_current_user
   end
 
+  def user_agent
+    string = request.env["HTTP_USER_AGENT"]
+
+    if string[/(Mobile\/.+Safari)|(AppleWebKit\/.+Mobile)/]
+      return "iOS"
+    elsif string[/Android/]
+      return "Android"
+    else
+      return "None"
+    end
+
+  end
+
   def session_show
     @session = session
   end
 	
   helper_method :current_user
+  helper_method :user_agent
   helper_method :session_show
 end

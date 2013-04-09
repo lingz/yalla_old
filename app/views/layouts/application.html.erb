@@ -2,7 +2,29 @@
 <html lang="en">
   <head>
     <title>Yalla!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <% if user_agent == "iOS" or user_agent == "Android" %>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <link rel="apple-touch-icon" href="/assets/mobile/iPhone.png" />
+      <link rel="apple-touch-icon" sizes="72x72" href="/assets/mobile/iPad.png" />
+      <link rel="apple-touch-icon" sizes="114x114" href="/assets/mobile/hi_res_iPhone.png" />
+      <link rel="apple-touch-icon" sizes="144x144" href="/assets/mobile/hi_res_iPad.png" />
+      <!-- iPhone -->
+      <link href="/assets/mobile/launch_iPhone.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+      <!-- iPhone (Retina) -->
+      <link href="/assets/mobile/launch_hi_res_iPhone.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+      <!-- iPhone 5 -->
+      <link href="/assets/mobile/launch_iPhone5.png"  media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+      <!-- iPad Portrait -->
+      <link href="/assets/mobile/launch_iPad_port.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+      <!-- iPad Landscape -->
+      <link href="/assets/mobile/launch_iPad_land.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+      <!-- iPad Portrait (Retina) -->
+      <link href="/assets/mobile/launch_hi_res_iPad_port.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+      <!-- iPad Landscape (Retina) -->
+      <link href="/assets/mobile/launch_hi_res_iPad_land.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+    <% end %>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta charset="utf-8">
@@ -55,27 +77,37 @@
       </div>
     </div>
     <!-- End Modal -->
+    <!-- colorbox intro -->
+    <div style="" id="colorbox-intro">
+      <a id="intro-first" class="intro" href="/assets/intro/intro0.jpg"> 0 </a>
+      <a class="intro" href="/assets/intro/intro1.jpg"> 1 </a>
+      <a class="intro" href="/assets/intro/intro2.jpg"> 2 </a>
+      <a class="intro" href="/assets/intro/intro3.jpg"> 3 </a>
+      <a class="intro" href="/assets/intro/intro4.jpg"> 4 </a>
+      <a class="intro" href="/assets/intro/intro5.jpg"> 5 </a>
+    </div>
     <!-- Le javascript
          ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-39965374-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-    </script>
     <script src="/assets/jquery.js" type="text/javascript"></script>
     <%= javascript_include_tag "jquery.masonry.min.js" %>
     <%= javascript_include_tag "jquery-ui-1.10.2.custom.js" %>
     <%= javascript_include_tag "base.js" %>
     <%= javascript_include_tag "bootstrap.js" %>
+    <%= javascript_include_tag "jquery.colorbox-min.js" %>
+    <%= javascript_include_tag "colorbox.js" %>
+    <% if current_user.state.nil? %>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          setTimeout(function(){$("#intro-first").click();}, 500);
+          });
+      </script>
+      <% current_user.set_state(1) %>
+    <% end %>
+    <% if user_agent == "iOS" %>
+      <%= javascript_include_tag "mobile.js" %>
+      <%= javascript_include_tag "add2home.js" %>
+    <% end %>
     <% if params[:event_id] %>
       <script type="text/javascript">
         $("#event-<%= params[:event_id] %>").find("#more-btn").click();

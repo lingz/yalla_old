@@ -12,7 +12,9 @@
  *= require bootstrap
  *= require bootstrap.icon-large
  *= require style
- *= require bootstrap-responsive 
+ *= require bootstrap-responsive
+ *= require colorbox 
+ *= require add2home
  */
 
 

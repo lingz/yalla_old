@@ -51,4 +51,9 @@ class User < ActiveRecord::Base
                 nyu_class: response["class"], email: "#{netID}@nyu.edu",
                 display_image: '/assets/nyuad.jpg')
   end
+
+  def set_state(state)
+    self.state = state
+    self.save!
+  end
 end

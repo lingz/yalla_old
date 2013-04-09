@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408203852) do
+ActiveRecord::Schema.define(:version => 20130409193734) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20130408203852) do
     t.string   "secondary_email"
     t.string   "remember_token"
     t.integer  "visits"
+    t.integer  "state"
   end
 
 end
