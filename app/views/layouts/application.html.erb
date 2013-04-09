@@ -78,7 +78,7 @@
     </div>
     <!-- End Modal -->
     <!-- colorbox intro -->
-    <div style="" id="colorbox-intro">
+    <div style="display:none;" id="colorbox-intro">
       <a id="intro-first" class="intro" href="/assets/intro/intro0.jpg"> 0 </a>
       <a class="intro" href="/assets/intro/intro1.jpg"> 1 </a>
       <a class="intro" href="/assets/intro/intro2.jpg"> 2 </a>
@@ -96,7 +96,7 @@
     <%= javascript_include_tag "bootstrap.js" %>
     <%= javascript_include_tag "jquery.colorbox-min.js" %>
     <%= javascript_include_tag "colorbox.js" %>
-    <% if current_user.state.nil? %>
+    <% if current_user.state.nil? and user_agent == "None" %>
       <script type="text/javascript">
         $(document).ready(function(){
           setTimeout(function(){$("#intro-first").click();}, 500);
