@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  before_save :create_remember_token
+  before_create :create_remember_token
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
