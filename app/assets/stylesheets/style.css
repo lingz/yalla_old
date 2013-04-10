@@ -73,6 +73,7 @@
 
 .event-container
 {
+  overflow: hidden;
   background: #eeeeee;
   border-radius: 20px;
   margin-bottom: 15px;
