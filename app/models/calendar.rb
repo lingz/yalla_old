@@ -192,9 +192,10 @@ class Calendar < ActiveRecord::Base
       state = self.add_person(user_event.event_id, user_event.user_id)
       user_event.destroy
       if !state
-        break
+        return false
       end
     end
+    return true
   end
 
 end
