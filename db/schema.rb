@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409193734) do
+ActiveRecord::Schema.define(:version => 20130410182242) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130409193734) do
     t.datetime "last_update"
     t.datetime "last_cleanup"
     t.integer  "calls"
+    t.integer  "failures"
   end
 
   create_table "comments", :force => true do |t|
@@ -82,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20130409193734) do
     t.datetime "updated_at", :null => false
     t.string   "email"
     t.text     "name"
-    t.boolean  "status"
+    t.string   "status"
   end
 
   create_table "users", :force => true do |t|

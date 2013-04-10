@@ -70,24 +70,26 @@ class Calendar < ActiveRecord::Base
               if attendee["email"] != "nyuad.yalla@gmail.com" and attendee["email"] != user.email
                 # search for if the attendee has an account or is in nyuad
                 attendee_user = User.find_by_email(attendee["email"]) || User.create_with_netID(attendee["email"].match(/(.*?)@nyu.edu/)[0][$1])
-                # if the attendee hsa an account in the system
+                # if the attendee has an account in the system
                 if attendee_user
                   # search for the link in the system
                   link = UserEvent.find_by_event_id_and_user_id(old_event.id, attendee_user.id)
                   # if the user is accepted
                   if attendee["responseStatus"] != "declined"
-                    old_event.user_events.create(user_id: attendee_user.id, status: true) if !link
+                    old_event.user_events.create(user_id: attendee_user.id, status: "true") if !link
                   # the event has been declined
                   elsif link
-                    link.status = false
+                    Rails.logger.info "calling 1"
+                    link.status = "false"
                     link.save!
                   end
                 else
                   link = UserEvent.find_by_email_and_name(attendee["email"], attendee["displayName"])
                   if attendee["responseStatus"] != "declined"
-                    old_event.user_events.create(email: attendee["email"], name: attendee["displayName"], status:true) if !link
+                    old_event.user_events.create(email: attendee["email"], name: attendee["displayName"], status:"true") if !link
                   elsif link
-                    link.status = false
+                    Rails.logger.info "calling 2"
+                    link.status = "false"
                     link.save!
                   end
                 end
@@ -150,6 +152,13 @@ class Calendar < ActiveRecord::Base
                             :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications' => true},
                             :body_object => result,
                             :headers => {'Content-Type' => 'application/json'})
+    if !result.data.to_json[/Calendar usage limits exceeded/].nil?
+      @calendar.failures += 1
+      event.user_events.create(user_id: user.id, status: "failed")
+      return false
+    else
+      return true
+    end
   end
 
   def self.get_client
@@ -174,6 +183,16 @@ class Calendar < ActiveRecord::Base
   def self.cleanup
     Event.all.each do |event|
       event.destroy if event.end_time < DateTime.now.advance(hours: 1)
+    end
+  end
+
+  def self.retry_old
+    UserEvent.find(:all, conditions: {status: :failed}).each do |user_event|
+      state = self.add_person(user_event.event_id, user_event.user_id)
+      user_event.destroy
+      if !state
+        break
+      end
     end
   end
 
