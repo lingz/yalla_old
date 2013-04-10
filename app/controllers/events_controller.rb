@@ -7,7 +7,7 @@ class EventsController < ApplicationController
     # search for events that the current user is attending
     @attendance_keys = []
     @cancelled_keys = []
-    if current_user.name && current_user.name[/Guest/]
+    if current_user && current_user.name && current_user.name[/Guest/]
       user = current_user
       user.state = nil
       user.save!

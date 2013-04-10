@@ -136,29 +136,34 @@ class Calendar < ActiveRecord::Base
   def self.add_person(eventID, userID)
     user = User.find(userID)
     event = Event.find(eventID)
-    @calendar = Calendar.find(1)
+    exists UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
+    if !exists
+      @calendar = Calendar.find(1)
 
-    client, service = self.get_client
+      client, service = self.get_client
 
-    result = client.execute(:api_method => service.events.get,
-                        :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
-    result = result.data
-    new_person = result.attendees[0].class.new
-    new_person.email = user.email
-    new_person.display_name = user.name
-    new_person.response_status = "accepted"
-    result.attendees = result.attendees << new_person
-    result = client.execute(:api_method => service.events.update,
-                            :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications' => true},
-                            :body_object => result,
-                            :headers => {'Content-Type' => 'application/json'})
-    if !result.data.to_json[/Calendar usage limits exceeded/].nil?
-      @calendar.failures = @calendar.failures + 1
-      @calendar.save!
-      event.user_events.create(user_id: user.id, status: "failed")
-      return false
+      result = client.execute(:api_method => service.events.get,
+                          :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
+      result = result.data
+      new_person = result.attendees[0].class.new
+      new_person.email = user.email
+      new_person.display_name = user.name
+      new_person.response_status = "accepted"
+      result.attendees = result.attendees << new_person
+      result = client.execute(:api_method => service.events.update,
+                              :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications' => true},
+                              :body_object => result,
+                              :headers => {'Content-Type' => 'application/json'})
+      if !result.data.to_json[/Calendar usage limits exceeded/].nil?
+        @calendar.failures = @calendar.failures + 1
+        @calendar.save!
+        event.user_events.create(user_id: user.id, status: "failed")
+        return false
+      else
+        return true
+      end
     else
-      return true
+      return false
     end
   end
 
