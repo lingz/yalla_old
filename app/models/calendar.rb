@@ -136,7 +136,7 @@ class Calendar < ActiveRecord::Base
   def self.add_person(eventID, userID)
     user = User.find(userID)
     event = Event.find(eventID)
-    exists UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
+    exists = UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
     if !exists
       @calendar = Calendar.find(1)
 
