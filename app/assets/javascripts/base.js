@@ -72,8 +72,13 @@ $('#myModal').on('hidden', function () {
 function attendEvent(eventID, userID) {
   $("#event-" + eventID).find("#attend-btn").animate({opacity: 0});
   $("#event-" + eventID).find("#success-btn").animate({opacity: 1});
-  $.post("/attend", {event_id: eventID, user_id: userID});
-  $.post("/update", {});
+  $.post("/attend", {event_id: eventID, user_id: userID})
+    .done(function(data){
+      if (data["success"]==false){
+        $.powerTip.show($("#event-" + eventID).find(".attend-btn-user"));
+        setTimeout(function(){$.powerTip.hide();}, 10000);
+      }
+    });
   return false;
 }
 
@@ -88,3 +93,7 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+$('.attend-btn-user').powerTip({
+  placement: 'n', // north-east tooltip position
+  manual: true
+});
