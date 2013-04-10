@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
                 nyu_class: params[:nyu_class], nyu_token: params[:nyu_token],
                 email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
     session[:user_id] = user
-    cookies.permanent[:remember_token] = user.remember_token
+    cookies[:remember_token] = {value: user.remember_token, expires: 1.year.from_now }
     redirect_to root_url
   end
     

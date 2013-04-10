@@ -96,7 +96,7 @@
     <%= javascript_include_tag "bootstrap.js" %>
     <%= javascript_include_tag "jquery.colorbox-min.js" %>
     <%= javascript_include_tag "colorbox.js" %>
-    <% if current_user.state.nil? and user_agent == "None" %>
+    <% if current_user.state.nil? and user_agent == "None" and params[:event_id].nil?%>
       <script type="text/javascript">
         $(document).ready(function(){
           setTimeout(function(){$("#intro-first").click();}, 500);
@@ -104,9 +104,15 @@
       </script>
       <% current_user.set_state(1) %>
     <% end %>
-    <% if user_agent == "iOS" %>
+    <% if current_user.state == 1 || current_user.state == "None" and user_agent == "iOS" and params[:event_id].nil?%>
       <%= javascript_include_tag "mobile.js" %>
       <%= javascript_include_tag "add2home.js" %>
+      <% current_user.set_state(2) %>
+    <% end %>
+    <% if current_user.state == 2 and user_agent == "iOS" and params[:event_id].nil?%>
+      <%= javascript_include_tag "mobile.js" %>
+      <%= javascript_include_tag "add2home.js" %>
+      <% current_user.set_state(3) %>
     <% end %>
     <% if params[:event_id] %>
       <script type="text/javascript">
