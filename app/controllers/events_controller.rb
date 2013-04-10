@@ -7,7 +7,15 @@ class EventsController < ApplicationController
     # search for events that the current user is attending
     @attendance_keys = []
     @cancelled_keys = []
-    if current_user
+    if current_user.name && current_user.name[/Guest/]
+      user = current_user
+      user.state = nil
+      user.save!
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @events }
+      end
+    elsif current_user
       user = current_user
       user.visits += 1
       user.save!
