@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 
 group :production, :staging do
     gem "pg"
+    gem "newrelic_rpm"
 end
 
 group :development, :test do
