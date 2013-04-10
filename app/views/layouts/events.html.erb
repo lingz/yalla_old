@@ -98,16 +98,6 @@
     <%= javascript_include_tag "colorbox.js" %>
     <%= javascript_include_tag "mobile.js" %>
     <%= javascript_include_tag "add2home.js" %>
-    <% if current_user.state == 2 and user_agent == "iOS" and params[:event_id].nil?%>
-      <%= javascript_include_tag "mobile.js" %>
-      <%= javascript_include_tag "add2home.js" %>
-      <% current_user.set_state(3) %>
-    <% end %>
-    <% if current_user.state == 1 || current_user.state == nil and user_agent == "iOS" and params[:event_id].nil?%>
-      <%= javascript_include_tag "mobile.js" %>
-      <%= javascript_include_tag "add2home.js" %>
-      <% current_user.set_state(2) %>
-    <% end %>
     <% if current_user.state.nil? and user_agent == "None" and params[:event_id].nil?%>
       <script type="text/javascript">
         $(document).ready(function(){
