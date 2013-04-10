@@ -15,10 +15,6 @@ class CalendarsController < ApplicationController
     else
       render json: {success: false, update: "Last update was too recently"}
     end
-    if !@calendar.last_cleanup || @calendar.last_update.advance(minutes: 30) < DateTime.now
-      @calendar.last_cleanup = DateTime.now
-      Calendar.cleanup
-    end
   end
 
   def attend
