@@ -77,7 +77,11 @@
                 <a href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>); return false;" >Attend</a>
               <% end %>
                 <!-- Dummy Button to hold position -->
+              <% if @cancelled_keys.include? event.id #user has cancelled event %>
+                <a style="opacity:0; height:30px;" href="#" class="btn btn-primary event-btn">-</a>
+              <% else %>
                 <a style="opacity:0;" href="#" class="btn btn-primary event-btn">-</a>
+              <% end %>
             </span>
           <a href="/events/<%= event.id %>" role="button" data-target="#myModal" data-toggle="modal" class="btn event-btn see-more" id="more-btn" onClick="changeHeader(<%= event.id %>)">See More</a>
           </div>

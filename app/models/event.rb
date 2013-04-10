@@ -37,7 +37,7 @@ class Event < ActiveRecord::Base
     # generate the blurb
     if self.description
       if self.description.length > 140
-        if self.description.index("\n") < 140
+        if self.description.index("\n") && self.description.index("\n") < 140
           self.blurb = self.description.split("\n")[0] + "..."
         else
           self.blurb = self.description[0...140] + "..."
