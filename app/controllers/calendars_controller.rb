@@ -24,8 +24,12 @@ class CalendarsController < ApplicationController
   def attend
     @user = User.find(params[:user_id])
     @event = Event.find(params[:event_id])
-    Calendar.add_person(@event, @user)
-    render json: {success: true, params: params} 
+    state = Calendar.add_person(@event, @user)
+    if state == true
+      render json: {success: true, params: params} 
+    else
+      render json: {success: false, params: params} 
+    end
   end
 
   def index

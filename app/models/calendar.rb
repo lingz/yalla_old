@@ -153,7 +153,8 @@ class Calendar < ActiveRecord::Base
                             :body_object => result,
                             :headers => {'Content-Type' => 'application/json'})
     if !result.data.to_json[/Calendar usage limits exceeded/].nil?
-      @calendar.failures += 1
+      @calendar.failures = @calendar.failures + 1
+      @calendar.save!
       event.user_events.create(user_id: user.id, status: "failed")
       return false
     else
