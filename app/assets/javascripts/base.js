@@ -69,11 +69,22 @@ $('#myModal').on('hidden', function () {
   window.history.pushState("", "home", "?");
 });
 
-function attendEvent(eventID, userID) {
-  $("#event-" + eventID).find("#attend-btn").animate({opacity: 0});
-  $("#event-" + eventID).find("#success-btn").animate({opacity: 1});
-  $.post("/attend", {event_id: eventID, user_id: userID});
-  $.post("/update", {});
+function attendEvent(eventID, userID, state) {
+  if (state==1){
+    $("#event-" + eventID).find("#attend-btn").animate({opacity: 0}).css('display', 'none');
+    $("#event-" + eventID).find("#success-btn").animate({opacity: 1}).css('display', '');
+  } else {
+    $("#event-" + eventID).find("#attend-btn").animate({opacity: 1}).css('display', '');
+    $("#event-" + eventID).find("#success-btn").animate({opacity: 0}).css('display', 'none');
+  }
+  $.post("/attend", {event_id: eventID, user_id: userID})
+    .done(function(data){
+      if (data["success"]==false){
+        $("#event-" + eventID).find(".dummy").data('powertip', "This event is still being migrated </br> to the new Yalla! infrastructure. </br> You will receive an invite automatically </br> when it has been moved.");
+        $.powerTip.show($("#event-" + eventID).find(".dummy"));
+        setTimeout(function(){$.powerTip.hide();}, 10000);
+      }
+    });
   return false;
 }
 
@@ -87,3 +98,5 @@ _gaq.push(['_trackPageview']);
   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
+
+$('.dummy').powerTip({placement: 'ne'});

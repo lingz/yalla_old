@@ -39,10 +39,10 @@
             </div>
             <div class="row-fluid event-detail">
               <div class="span2">
-                <i class="icon-large icon-envelope"></i>
+                <i style="margin-left:5px; margin-top:5px;" class="icon-large icon-map-marker"></i>
               </div>
               <div class="span10">
-                <h5 class="event-parameter">Attendees: <%= event.user_events.count + 1 %></h5>
+                <h5 class="event-parameter">Location: <%= !event.location.nil? ? event.location :  "N/A" %></h5>
               </div>
             </div>
             <div class="row-fluid event-detail">
@@ -65,22 +65,18 @@
             <span class="attend-btn">
               <% if event.user == current_user #user is the host%>
                 <a style="opacity:1" href="#" class="btn btn-info disabled event-btn" id="success-btn" onClick="return false;" >Host</a>
-                <a style="opacity:0" href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>); return false;" >Attend</a>
-              <% elsif @attendance_keys.include? event.id #user is not already attending%>
-                <a style="opacity:1" href="#" class="btn btn-success disabled event-btn" id="success-btn" onClick="return false;" >Attending</a>
-                <a style="opacity:0" href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>); return false;" >Attend</a>
-              <% elsif @cancelled_keys.include? event.id #user has cancelled event %>
-                <a style="opacity:1" href="#" class="btn btn-danger disabled event-btn" id="success-btn" onClick="return false;" >RSVP Cancelled</a>
-                <a style="opacity:0" href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>); return false;" >Attend</a>
+              <% elsif @attendance_keys.include? event.id #user is already attending%>
+                <a style="opacity:1" href="#" class="btn btn-success event-btn" id="success-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>, 0); return false;" >Attending</a>
+                <a style="opacity:0; display:none;" href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>, 1); return false;" >Attend</a>
               <% else # user has neither attended nor cancelled the event%>
-                <a href="#" class="btn btn-success disabled event-btn" id="success-btn" onClick="return false;" >Attending</a>
-                <a href="#" title="Because of high demand, Yalla! </br> is exceeding its Google service </br> key limit. Your request has been </br> added to the queue and the event </br> will be automatically added to your </br> calendar when Yalla! next has </br> resources available." class="attend-btn-user btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>); return false;" >Attend</a>
+                <a style="opacity:0; display:none;" href="#" class="btn btn-success event-btn" id="success-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>, 0); return false;" >Attending</a>
+                <a style="opacity:1" href="#" class="btn btn-primary event-btn" id="attend-btn" onClick="attendEvent(<%= event.id %>, <%= current_user.id if current_user %>, 1); return false;" >Attend</a>
               <% end %>
                 <!-- Dummy Button to hold position -->
               <% if @cancelled_keys.include? event.id #user has cancelled event %>
                 <a style="opacity:0; height:30px;" href="#" class="btn btn-primary event-btn">-</a>
               <% else %>
-                <a style="opacity:0;" href="#" class="btn btn-primary event-btn">-</a>
+                <a style="opacity:0;" href="#" class="dummy btn btn-primary event-btn">-</a>
               <% end %>
             </span>
           <a href="/events/<%= event.id %>" role="button" data-target="#myModal" data-toggle="modal" class="btn event-btn see-more" id="more-btn" onClick="changeHeader(<%= event.id %>)">See More</a>

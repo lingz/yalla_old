@@ -4,6 +4,10 @@ class SessionsController < ApplicationController
     School.find_by_name("NYUAD").users.create(name: params[:name], netID: params[:netID],
                 nyu_class: params[:nyu_class], nyu_token: params[:nyu_token],
                 email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
+    if user.nyu_token.nil?
+      user.nyu_token = params[:nyu_token]
+      user.save!
+    end
     session[:user_id] = user
     cookies[:remember_token] = {value: user.remember_token, expires: 1.year.from_now }
     redirect_to root_url

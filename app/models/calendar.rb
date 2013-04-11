@@ -107,7 +107,7 @@ class Calendar < ActiveRecord::Base
       elsif event["status"] == "cancelled" 
         event = Event.find_by_unique_id(event["iCalUID"])
         if event
-          Event.delete(event.id)
+          event.destroy
         end
       else
         puts("Error:unhandled event state")
@@ -134,27 +134,38 @@ class Calendar < ActiveRecord::Base
   end
 
   def self.add_person(eventID, userID)
-    user = User.find(userID)
-    event = Event.find(eventID)
+    user = User.find_by_id(userID)
+    event = Event.find_by_id(eventID)
     if !user or !event
-      return false
+      return true
     end
-    exists = UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
-    if !exists
+    user_event = UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
+    if user.nyu_token
       @calendar = Calendar.find(1)
 
-      client, service = self.get_client
+      client, service = self.get_user_client(event.user.id)
+      if !client or !service
+        event.user_events.create(user_id: user.id, status: "failed")
+        return false
+      end
+        
 
-      result = client.execute(:api_method => service.events.get,
-                          :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids})
-      result = result.data
-      new_person = result.attendees[0].class.new
-      new_person.email = user.email
-      new_person.display_name = user.name
-      new_person.response_status = "accepted"
-      result.attendees = result.attendees << new_person
+      result = client.execute(:api_method => service.events.list,
+                          :parameters => {'calendarId' => event.user.email, 'iCalUID' => event.unique_id})
+      result = result.data.items[0]
+      ids = result.id
+      if !user_event
+        new_person = result.attendees[0].class.new
+        new_person.email = user.email
+        new_person.display_name = user.name
+        new_person.response_status = "accepted"
+        result.attendees = result.attendees << new_person
+      else
+        result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
+        user_event.destroy
+      end
       result = client.execute(:api_method => service.events.update,
-                              :parameters => {'calendarId' => @calendar.calendar_id, 'eventId' => event.ids, 'sendNotifications' => true},
+                              :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
                               :body_object => result,
                               :headers => {'Content-Type' => 'application/json'})
       if !result.data.to_json[/Calendar usage limits exceeded/].nil?
@@ -163,9 +174,11 @@ class Calendar < ActiveRecord::Base
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       else
+        event.user_events.create(user_id: user.id, status: "true")
         return true
       end
     else
+      event.user_events.create(user_id: user.id, status: "failed")
       return false
     end
   end
@@ -186,6 +199,25 @@ class Calendar < ActiveRecord::Base
 
     service = client.discovered_api('calendar','v3')
 
+    return client, service
+  end
+
+  # get the client and service for the individual user
+  def self.get_user_client(userId)
+    require 'google/api_client'
+    user = User.find_by_id(userId)
+    if !user or !user.nyu_token
+      return false, false
+    end
+    request_url = "http://passport.sg.nyuad.org/visa/google/token?access_token=" + user.nyu_token
+    token = HTTParty.get(request_url).parsed_response
+    if token["error"]
+      return false, false
+    end
+    client = Google::APIClient.new
+    client.authorization.scope = "https://www.googleapis.com/auth/calendar"
+    client.authorization.access_token = token["access_token"]
+    service = client.discovered_api('calendar','v3')
     return client, service
   end
 
