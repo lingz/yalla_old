@@ -65,7 +65,7 @@ class Calendar < ActiveRecord::Base
           # if the event already exists, update it
           if old_event
             #keep a track of all the stale links, which have been removed
-            stale_links = UserEvent.find(:all, conditions: {event_id: old_event.id})
+            stale_links = UserEvent.find(:all, conditions: {event_id: old_event.id, status: "true"})
             # update attendance links
             event["attendees"].each do |attendee|
               # ignore this for the host and the events system
@@ -84,7 +84,6 @@ class Calendar < ActiveRecord::Base
                   # the event has been declined
                   elsif link
                     link.destroy
-                    link.save!
                     # toggle the add again, and it will destroy the event on their calendar
                     self.add_person(old_event.id, attendee_user.id)
                   end
@@ -152,40 +151,36 @@ class Calendar < ActiveRecord::Base
 
       client, service = self.get_user_client(event.user.id)
       if !client or !service
-        Rails.logger.info("calling 9")
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       end
-        
 
       result = client.execute(:api_method => service.events.list,
                           :parameters => {'calendarId' => event.user.email, 'iCalUID' => event.unique_id})
       result = result.data.items[0]
       ids = result.id
       if !user_event
-        Rails.logger.info("calling 2")
         new_person = result.attendees[0].class.new
         new_person.email = user.email
         new_person.display_name = user.name
         new_person.response_status = "accepted"
         result.attendees = result.attendees << new_person
+        event.user_events.create(user_id: user.id, status: "true")
       else
         result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
-        user_event = UserEvent.find(user_event.id)
         user_event.destroy
       end
       result = client.execute(:api_method => service.events.update,
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
                               :body_object => result,
                               :headers => {'Content-Type' => 'application/json'})
-      Rails.logger.info(result.data.to_json)
       if !result.data.to_json[/Calendar usage limits exceeded/].nil?
         @calendar.failures = @calendar.failures + 1
         @calendar.save!
+        user_event.destroy if user_event
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       else
-        event.user_events.create(user_id: user.id, status: "true")
         return true
       end
     else
