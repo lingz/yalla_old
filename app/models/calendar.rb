@@ -171,8 +171,8 @@ class Calendar < ActiveRecord::Base
         result.attendees = result.attendees << new_person
       else
         result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
+        user_event = UserEvent.find(user_event.id)
         user_event.destroy
-        user_event.save!
       end
       result = client.execute(:api_method => service.events.update,
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
