@@ -154,6 +154,9 @@ class Calendar < ActiveRecord::Base
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       end
+      Rails.logger.info("eventID")
+      Rails.logger.info(event)
+
 
       result = client.execute(:api_method => service.events.list,
                           :parameters => {'calendarId' => event.user.email, 'iCalUID' => event.unique_id})
@@ -229,17 +232,14 @@ class Calendar < ActiveRecord::Base
 
   def self.cleanup
     Event.all.each do |event|
-      event.destroy if event.end_time < DateTime.now.advance(hours: 1)
+      even1.destroy if event.end_time < DateTime.now.advance(hours: 1)
     end
   end
 
   def self.retry_old
     UserEvent.find(:all, conditions: {status: :failed}).each do |user_event|
-      state = self.add_person(user_event.event_id, user_event.user_id)
       user_event.destroy
-      if !state
-        return false
-      end
+      self.add_person(user_event.event_id, user_event.user_id)
     end
     return true
   end
