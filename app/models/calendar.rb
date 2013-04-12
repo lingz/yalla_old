@@ -154,8 +154,8 @@ class Calendar < ActiveRecord::Base
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       end
-      Rails.logger.info("eventID")
-      Rails.logger.info(event)
+      Rails.logger.info(eventID)
+      Rails.logger.info(event.name)
 
 
       result = client.execute(:api_method => service.events.list,
