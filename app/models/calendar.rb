@@ -79,7 +79,6 @@ class Calendar < ActiveRecord::Base
                     old_event.user_events.create(user_id: attendee_user.id, status: "true") if !link
                   # the event has been declined
                   elsif link
-                    Rails.logger.info "calling 1"
                     link.status = "false"
                     link.save!
                   end
@@ -88,7 +87,6 @@ class Calendar < ActiveRecord::Base
                   if attendee["responseStatus"] != "declined"
                     old_event.user_events.create(email: attendee["email"], name: attendee["displayName"], status:"true") if !link
                   elsif link
-                    Rails.logger.info "calling 2"
                     link.status = "false"
                     link.save!
                   end
@@ -141,10 +139,12 @@ class Calendar < ActiveRecord::Base
     end
     user_event = UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
     if user.nyu_token
+      Rails.logger.info("calling 1")
       @calendar = Calendar.find(1)
 
       client, service = self.get_user_client(event.user.id)
       if !client or !service
+        Rails.logger.info("calling 9")
         event.user_events.create(user_id: user.id, status: "failed")
         return false
       end
@@ -155,6 +155,7 @@ class Calendar < ActiveRecord::Base
       result = result.data.items[0]
       ids = result.id
       if !user_event
+        Rails.logger.info("calling 2")
         new_person = result.attendees[0].class.new
         new_person.email = user.email
         new_person.display_name = user.name
@@ -168,16 +169,20 @@ class Calendar < ActiveRecord::Base
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
                               :body_object => result,
                               :headers => {'Content-Type' => 'application/json'})
+      Rails.logger.info(result.data.to_json)
       if !result.data.to_json[/Calendar usage limits exceeded/].nil?
         @calendar.failures = @calendar.failures + 1
         @calendar.save!
         event.user_events.create(user_id: user.id, status: "failed")
+        Rails.logger.info("calling 3")
         return false
       else
+        Rails.logger.info("calling 4")
         event.user_events.create(user_id: user.id, status: "true")
         return true
       end
     else
+      Rails.logger.info("calling 5")
       event.user_events.create(user_id: user.id, status: "failed")
       return false
     end
