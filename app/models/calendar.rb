@@ -64,6 +64,8 @@ class Calendar < ActiveRecord::Base
           old_event = Event.find_by_unique_id(params[:unique_id])
           # if the event already exists, update it
           if old_event
+            #keep a track of all the stale links, which have been removed
+            stale_links = UserEvent.find(:all, conditions: {event_id: old_event.id})
             # update attendance links
             event["attendees"].each do |attendee|
               # ignore this for the host and the events system
@@ -74,13 +76,16 @@ class Calendar < ActiveRecord::Base
                 if attendee_user
                   # search for the link in the system
                   link = UserEvent.find_by_event_id_and_user_id(old_event.id, attendee_user.id)
+                  # remove it from the stale list
+                  stale_links.delete_if {|stale_link| one_link == link}
                   # if the user is accepted
                   if attendee["responseStatus"] != "declined"
                     old_event.user_events.create(user_id: attendee_user.id, status: "true") if !link
                   # the event has been declined
                   elsif link
-                    link.status = "false"
-                    link.save!
+                    link.destroy
+                    # toggle the add again, and it will destroy the event on their calendar
+                    self.add_person(old_event.id, attendee_user.id)
                   end
                 else
                   link = UserEvent.find_by_email_and_name(attendee["email"], attendee["displayName"])
@@ -95,6 +100,8 @@ class Calendar < ActiveRecord::Base
             end
             old_event.update_attributes(params)
             old_event.save!
+            # get rid of all the stale_links
+            stale_links.each {|link| link.destroy}
           # otherwise create a new event
           else
             user.events.create(params)
@@ -165,17 +172,17 @@ class Calendar < ActiveRecord::Base
         result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
         Rails.logger.info("calling 3")
         Rails.logger.info(user_event)
-        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
         puts("calling 3")
         puts(user_event)
-        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
         user_event.destroy
         Rails.logger.info("calling 4")
         Rails.logger.info(user_event)
-        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
         puts("calling 4")
         puts(user_event)
-        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
       end
       result = client.execute(:api_method => service.events.update,
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
