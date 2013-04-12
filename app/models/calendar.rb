@@ -77,13 +77,14 @@ class Calendar < ActiveRecord::Base
                   # search for the link in the system
                   link = UserEvent.find_by_event_id_and_user_id(old_event.id, attendee_user.id)
                   # remove it from the stale list
-                  stale_links.delete_if {|stale_link| one_link == link}
+                  stale_links.delete_if {|stale_link| stale_link == link}
                   # if the user is accepted
                   if attendee["responseStatus"] != "declined"
                     old_event.user_events.create(user_id: attendee_user.id, status: "true") if !link
                   # the event has been declined
                   elsif link
                     link.destroy
+                    link.save!
                     # toggle the add again, and it will destroy the event on their calendar
                     self.add_person(old_event.id, attendee_user.id)
                   end
@@ -170,19 +171,8 @@ class Calendar < ActiveRecord::Base
         result.attendees = result.attendees << new_person
       else
         result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
-        Rails.logger.info("calling 3")
-        Rails.logger.info(user_event)
-        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
-        puts("calling 3")
-        puts(user_event)
-        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
         user_event.destroy
-        Rails.logger.info("calling 4")
-        Rails.logger.info(user_event)
-        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
-        puts("calling 4")
-        puts(user_event)
-        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id))
+        user_event.save!
       end
       result = client.execute(:api_method => service.events.update,
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
@@ -193,15 +183,12 @@ class Calendar < ActiveRecord::Base
         @calendar.failures = @calendar.failures + 1
         @calendar.save!
         event.user_events.create(user_id: user.id, status: "failed")
-        Rails.logger.info("calling 3")
         return false
       else
-        Rails.logger.info("calling 4")
         event.user_events.create(user_id: user.id, status: "true")
         return true
       end
     else
-      Rails.logger.info("calling 5")
       event.user_events.create(user_id: user.id, status: "failed")
       return false
     end
