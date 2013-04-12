@@ -163,7 +163,19 @@ class Calendar < ActiveRecord::Base
         result.attendees = result.attendees << new_person
       else
         result.attendees = result.attendees.delete_if {|attendee| attendee.email == user.email }
+        Rails.logger.info("calling 3")
+        Rails.logger.info(user_event)
+        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        puts("calling 3")
+        puts(user_event)
+        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
         user_event.destroy
+        Rails.logger.info("calling 4")
+        Rails.logger.info(user_event)
+        Rails.logger.info(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
+        puts("calling 4")
+        puts(user_event)
+        puts(UserEvent.find_by_user_id_and_event_id(user.id, event.id)
       end
       result = client.execute(:api_method => service.events.update,
                               :parameters => {'calendarId' => event.user.email, 'eventId' => ids, 'sendNotifications' => true},
