@@ -145,7 +145,7 @@ class Calendar < ActiveRecord::Base
       return true
     end
     user_event = UserEvent.find_by_user_id_and_event_id_and_status(user.id, event.id, "true")
-    if user.nyu_token
+    if event.user.nyu_token
       Rails.logger.info("calling 1")
       @calendar = Calendar.find(1)
 
@@ -165,7 +165,7 @@ class Calendar < ActiveRecord::Base
       if !user_event
         new_person = result.attendees[0].class.new
         new_person.email = user.email
-        new_person.display_name = user.name
+        new_person.display_name = user.name if user.name
         new_person.response_status = "accepted"
         result.attendees = result.attendees << new_person
         event.user_events.create(user_id: user.id, status: "true")
