@@ -73,9 +73,13 @@ function attendEvent(eventID, userID, state) {
   if (state==1){
     $("#event-" + eventID).find("#attend-btn").animate({opacity: 0}).css('display', 'none');
     $("#event-" + eventID).find("#success-btn").animate({opacity: 1}).css('display', '');
+    $(".modal-footer").find("#attend-btn").animate({opacity: 0}).css('display', 'none');
+    $(".modal-footer").find("#success-btn").animate({opacity: 1}).css('display', '');
   } else {
     $("#event-" + eventID).find("#attend-btn").animate({opacity: 1}).css('display', '');
     $("#event-" + eventID).find("#success-btn").animate({opacity: 0}).css('display', 'none');
+    $(".modal-footer").find("#attend-btn").animate({opacity: 1}).css('display', '');
+    $(".modal-footer").find("#success-btn").animate({opacity: 0}).css('display', 'none');
   }
   $.post("/attend", {event_id: eventID, user_id: userID})
     .done(function(data){
