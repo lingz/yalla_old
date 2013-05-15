@@ -15,3 +15,7 @@
 /tmp
 
 omniauth
+
+#Ignore misc
+OAuthTokens.txt
+:q
