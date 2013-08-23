@@ -18,4 +18,4 @@ omniauth
 
 #Ignore misc
 OAuthTokens.txt
-:q
+*.swp
