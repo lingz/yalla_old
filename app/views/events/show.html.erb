@@ -65,7 +65,7 @@
   </div>
   <div class="row-fluid">
     <div class="detailled-description span9">
-      <%= @event.description.gsub /\n/, "<br />" %>
+      <%= (@event.description.gsub /\n\n/, "<br />").html_safe %>
     </div>
   </div>
 </div>
