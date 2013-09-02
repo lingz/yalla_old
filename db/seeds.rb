@@ -18,19 +18,5 @@ calendar = Calendar.create({code: "4/4Mt_ULTtrxwsNq_osEgXcepzwe9D.4mHA91ZWNwQYaD
 calendar.save!
 
 nyuad = School.create({name: "NYUAD", image: "/assets/nyuad.jpg"})
-claflin = School.create({name: "Claflin", image:"/assets/claflin.jpg"})
-zayed = School.create({name: "Zayed University", image:"/assets/zayed.jpg"})
 
 nyuad.save!
-claflin.save!
-zayed.save!
-
-guest1 = User.create({name: "Guest 1"})
-guest2 = User.create({name: "Guest 2"})
-guest3 = User.create({name: "Guest 3"})
-guest4 = User.create({name: "Guest 4"})
-
-guest1.save!
-guest2.save!
-guest3.save!
-guest4.save!

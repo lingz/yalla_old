@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     redirect_to "https://accounts.google.com/logout" 
   end
   def nyu_create
-    auth_url = "https://accounts.google.com/o/oauth2/auth?response_type=code&hd=nyu.edu&client_id=#{ENV['CLIENT_ID']}&redirect_uri=#{ENV['HOSTNAME']}/oauth2callback&access_type=offline&scope=https://www.googleapis.com/auth/calendar%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&approval_prompt=force"
+    auth_url = "https://accounts.google.com/o/oauth2/auth?response_type=code&hd=nyu.edu&client_id=#{ENV['CLIENT_ID']}&redirect_uri=#{ENV['HOSTNAME']}/oauth2callback&access_type=offline&scope=https://www.googleapis.com/auth/calendar%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile"
     redirect_to auth_url
   end
   def nyu_callback
