@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410182242) do
+ActiveRecord::Schema.define(:version => 20130902200003) do
 
   create_table "attending_users", :force => true do |t|
     t.integer  "user_id"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20130410182242) do
     t.string   "remember_token"
     t.integer  "visits"
     t.integer  "state"
+    t.string   "refresh_token"
   end
 
 end

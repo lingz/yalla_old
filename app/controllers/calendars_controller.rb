@@ -3,7 +3,8 @@ class CalendarsController < ApplicationController
   # GET /calendars
   # GET /calendars.json
 
-  def callback
+  def code_callback
+    render json: {code: params[:code]}
   end
 
   def update

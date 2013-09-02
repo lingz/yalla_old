@@ -1,11 +1,12 @@
 class SessionsController < ApplicationController
   def create
     user = User.find_by_netID(params[:netID]) ||
-    School.find_by_name("NYUAD").users.create(name: params[:name], netID: params[:netID],
-                nyu_class: params[:nyu_class], nyu_token: params[:nyu_token],
-                email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
-    if user.nyu_token.nil?
+    School.find_by_name("NYUAD").users.create(name: params[:name], netID: params[:netID], 
+                                              nyu_token: params[:nyu_token], refresh_token: params[:refresh_token],
+                                              email: "#{params[:netID]}@nyu.edu", display_image: '/assets/nyuad.jpg')
+    if user.nyu_token.nil? || user.refresh_token.nil?
       user.nyu_token = params[:nyu_token]
+      user.refresh_token = params[:refresh_token]
       user.save!
     end
     session[:user_id] = user
@@ -24,29 +25,23 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     cookies.delete(:remember_token)
-    redirect_to "http://passport.sg.nyuad.org/auth/logout" 
+    redirect_to "https://accounts.google.com/logout" 
   end
   def nyu_create
-    client = OAuth2::Client.new('W6zBUB3r2e90r0w24ts01seg3', '98j08jpiupiuy7dfy3yn', 
-                                site: 'http://passport.sg.nyuad.org/', 
-                                authorize_url: "/visa/oauth/authorize", token_url: "/visa/oauth/token")
-    Rails.logger.debug(root_url)
-    Rails.logger.debug(root_url + 'auth/nyu/callback')
-    auth_url = client.auth_code.authorize_url(redirect_uri: root_url + 'auth/nyu/callback')
+    auth_url = "https://accounts.google.com/o/oauth2/auth?response_type=code&hd=nyu.edu&client_id=#{ENV['CLIENT_ID']}&redirect_uri=#{ENV['HOSTNAME']}/oauth2callback&access_type=offline&scope=https://www.googleapis.com/auth/calendar%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&approval_prompt=force"
     redirect_to auth_url
   end
   def nyu_callback
-    client = OAuth2::Client.new('W6zBUB3r2e90r0w24ts01seg3', '98j08jpiupiuy7dfy3yn', 
-                                site: 'http://passport.sg.nyuad.org/', 
-                                authorize_url: "/visa/oauth/authorize", token_url: "/visa/oauth/token")
     if params[:code]
-      token = client.auth_code.get_token(params[:code])
-      response = JSON.parse token.get('/visa/use/info/me').body
+      access_token, refresh_token = User.get_token params[:code]
+      info = JSON.parse HTTParty.get("https://www.googleapis.com/oauth2/v1/userinfo?access_token=#{access_token}").to_json
+      netID = info["email"].match(/^([^@]+)/)[0]
+      name = info["name"]
       redirect_to controller: "sessions", action: "create", 
-        netID: response['netID'], name: response['name'], nyu_class: response['class'],
-        nyu_token: token.token
+        netID: netID, name: name, nyu_token: access_token, refresh_token: refresh_token
     else
       redirect_to root_url, notice: "Authorization Failure"
     end
+
   end
 end

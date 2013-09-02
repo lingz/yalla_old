@@ -200,8 +200,8 @@ class Calendar < ActiveRecord::Base
     @calendar.save!
 
     client = Google::APIClient.new
-    client.authorization.client_id = "759068570332.apps.googleusercontent.com"
-    client.authorization.client_secret = "7amw71XAAyReH92K_LtOp5-a"
+    client.authorization.client_id = ENV['CLIENT_ID']
+    client.authorization.client_secret = ENV['CLIENT_SECRET']
     client.authorization.scope = "https://www.googleapis.com/auth/calendar"
     client.authorization.refresh_token = @calendar.refresh_token
     client.authorization.access_token = @calendar.access_token
@@ -215,20 +215,17 @@ class Calendar < ActiveRecord::Base
   def self.get_user_client(userId)
     require 'google/api_client'
     user = User.find_by_id(userId)
-    if !user or !user.nyu_token
-      return false, false
-    end
-    request_url = "http://passport.sg.nyuad.org/visa/google/token?access_token=" + user.nyu_token
-    token = HTTParty.get(request_url).parsed_response
-    if token["error"]
+    if !user or !user.nyu_token or !user.refresh_token
       return false, false
     end
     client = Google::APIClient.new
     client.authorization.scope = "https://www.googleapis.com/auth/calendar"
-    client.authorization.access_token = token["access_token"]
+    client.authorization.access_token = user.nyu_token
+    client.authorization.refresh_token = user.refresh_token
     service = client.discovered_api('calendar','v3')
     return client, service
   end
+
 
   def self.cleanup
     Event.all.each do |event|

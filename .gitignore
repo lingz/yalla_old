@@ -18,4 +18,6 @@ omniauth
 
 #Ignore misc
 OAuthTokens.txt
+OAuthTokensNew.txt
+config/initializers/dev_environment.rb
 *.swp

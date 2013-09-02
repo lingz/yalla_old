@@ -47,13 +47,25 @@ class User < ActiveRecord::Base
       return nil
     end
     nyuad = School.find_by_name("NYUAD")
-    user = nyuad.users.create(name: response["name"], netID: netID,
-                nyu_class: response["class"], email: "#{netID}@nyu.edu",
-                display_image: '/assets/nyuad.jpg')
+    user = nyuad.users.create(name: response["name"], netID: netID, email: "#{netID}@nyu.edu", display_image: '/assets/nyuad.jpg')
   end
 
   def set_state(state)
     self.state = state
     self.save!
   end
+
+  def self.get_token code
+    data = {
+      code: code,
+      client_id: ENV['CLIENT_ID'],
+      client_secret: ENV['CLIENT_SECRET'],
+      redirect_uri: ENV['HOSTNAME'] + "/oauth2callback",
+      grant_type: "authorization_code"
+    }
+    resp = JSON.parse HTTParty.post("https://accounts.google.com/o/oauth2/token",
+                  body: data).body
+    return resp["access_token"], resp["refresh_token"]
+  end
+
 end
