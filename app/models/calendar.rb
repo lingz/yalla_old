@@ -219,6 +219,8 @@ class Calendar < ActiveRecord::Base
       return false, false
     end
     client = Google::APIClient.new
+    client.authorization.client_id = ENV['CLIENT_ID']
+    client.authorization.client_secret = ENV['CLIENT_SECRET']
     client.authorization.scope = "https://www.googleapis.com/auth/calendar"
     client.authorization.access_token = user.nyu_token
     client.authorization.refresh_token = user.refresh_token
